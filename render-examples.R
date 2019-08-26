@@ -78,3 +78,20 @@ ex9 <- geozoo::torus.flat()$points
 colnames(ex9) <- c("x1", "x2", "x3", "x4")
 anchorT <- c(0.5, 0.5, 0.5, 0.5)
 animate_slice(ex9, anchor=anchorT)
+
+# Classical pollen data: this doesn't work, structure is 2D in 5D so mostly missed
+library(animation)
+data(pollen)
+pollen <- as.matrix(pollen)
+animate_slice(pollen, axes = "bottomleft", eps=0.01, rescale=TRUE)
+
+# Could we look at nonlinear boundaries between classifiers
+library(RColorBrewer)
+wine_radial <- read_csv("data/wine-svm-radial.csv")
+wine_poly <- read_csv("data/wine-svm-poly.csv")
+clrs <- brewer.pal(3, "Dark2")
+col <- clrs[as.numeric(as.factor(wine_poly$type))]
+animate_slice(as.matrix(wine_poly[,1:5]), axes = "bottomleft", 
+              eps=0.001, col=col)
+
+
