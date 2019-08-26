@@ -1,6 +1,6 @@
 ---
 title: |
-  A slice tour
+  A slice tour for finding hollowness in high-dimensional data
 type: Short Technical Note
 author:
   - name: Ursula Laa
@@ -60,6 +60,8 @@ In the following we are interested in the orthogonal distance of scatter points 
 
 ## Slicing in the orthogonal space
 
+### Distance from the origin
+
 In addition to the projected data $\mathbf{Y}$ we calculate for each projection the orthogonal distance of the data points from the current projection plane centered at the origin, $v$. The orthogonal component is given by
 \begin{equation}
 x_i' = x_i - (x_i\cdot a_1) a_1 - (x_i\cdot a_2) a_2
@@ -72,6 +74,11 @@ Calculating the euclidean norm of $x'$ is straightforward thanks to the orthonor
 We also see that this is trivially generalizing for orthonormal projection matrices with $d>2$.
 
 The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In general a larger cutoff value and/or much larger sample sizes are required as the original dimensionality ($n$) increases. For practical purposes we therefore specify a volume $\epsilon$ and then use as a cutoff $h = \epsilon^{1/n}$.
+
+XXX Example 2x2, row 1-col 1 has a slice projection  of a solid 4D spehere, row 1-col 2 has a slice projectionof a hollow 4D sphere; row 2-col 1 has a slice projection of a  solid 4D cube, row 1-col 2 has a slice projection of a hollow 4D cube
+
+### Slice thickness
+
 
 ### Anchoring
 
@@ -92,11 +99,17 @@ x_i'\cdot\alpha' = x_i\cdot\alpha - (\alpha\cdot a_1) (x_i\cdot a_1) - (\alpha\c
 
 Using the generalized distance measure with a cutoff volume $\epsilon$ then corresponds to moving a slice of fixed thickness to be centered around the anchor point $\alpha$ in the space orthogonal to the current projection plane. In three dimensions this simply corresponds to moving up or down along the orthogonal direction.
 
+
+
 # Implementation
 
 The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the anchor point $\alpha$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the origin. In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice  = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside.
 
-# Example
+XXX R code
+
+# Examples
+
+XXX choose 6
 
 To demonstrate the slice tour we sample points on the surface of a sphere with radius $r=1$ in $n=3$ and $n=5$ dimensions. We use the `geozoo` package [@geozoo] to draw 2000 (5000) points on the 3d (5d) sphere.
 
