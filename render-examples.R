@@ -77,4 +77,10 @@ animate_slice(ex8)
 ex9 <- geozoo::torus.flat()$points
 colnames(ex9) <- c("x1", "x2", "x3", "x4")
 anchorT <- c(0.5, 0.5, 0.5, 0.5)
-animate_slice(ex9, anchor=anchorT)
+animate_slice(ex9, eps=0.01) #, anchor=anchorT)
+
+
+ex9 <- geozoo::torus(p=4)$points %>%
+  scale()
+colnames(ex9) <- c("x1", "x2", "x3", "x4")
+animate_slice(ex9, eps=0.01)
