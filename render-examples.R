@@ -96,7 +96,10 @@ wine_radial <- read_csv("data/wine-svm-radial.csv")
 wine_poly <- read_csv("data/wine-svm-poly.csv")
 clrs <- brewer.pal(3, "Dark2")
 col <- clrs[as.numeric(as.factor(wine_poly$type))]
+wine_poly_scaled <- scale(as.matrix(wine_poly[,1:5]))
 animate_slice(as.matrix(wine_poly[,1:5]), axes = "bottomleft", 
               eps=0.001, col=col)
+animate_slice(wine_poly_scaled, axes = "bottomleft", 
+              eps=0.05, col=col)
 animate_xy(as.matrix(wine_poly[,1:5]), axes = "bottomleft", col=col)
 

@@ -60,5 +60,20 @@ ggplot(data.frame(x=c(0, 0.2)), aes(x=x)) +
   xlab("h") +
   ylab("pbeta")
 
+library(zipfR)
+hPerRelVol <- function(n, r){
+    function(vrel){
+      x <- 1 - vrel
+      a <- (n+1) / 2
+      b <- 1/2
+      1 - Rbeta.inv(x, a, b)
+    }
+}
 
-
+ggplot(data.frame(x=c(0.01, 0.2)), aes(x=x)) +
+  stat_function(fun=hPerRelVol(3, r), geom="line", color="black") +
+  stat_function(fun=hPerRelVol(4, r), geom="line", color="blue") +
+  stat_function(fun=hPerRelVol(5, r), geom="line", color="green") +
+  stat_function(fun=hPerRelVol(6, r), geom="line", color="red") +
+  xlab("relative volume") +
+  ylab("h")
