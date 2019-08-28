@@ -18,9 +18,15 @@ relArea <- function(n, r){
   }
 }
 
+pbetaX <- function(n, r){
+  function(x){
+    pbeta(1-x^2, n/2, 1/2)
+  }
+}
+
 r <- 1
 
-ggplot(data.frame(x=c(0.01, 0.2)), aes(x=x)) +
+ggplot(data.frame(x=c(0.01, 0.5)), aes(x=x)) +
   stat_function(fun=relVol(3, r), geom="line", color="black") +
   stat_function(fun=relVol(6, r), geom="line", color="blue") +
   stat_function(fun=relVol(10, r), geom="line", color="green") +
@@ -30,4 +36,15 @@ ggplot(data.frame(x=c(0.01, 0.2)), aes(x=x)) +
   stat_function(fun=relArea(10, r), geom="line", color="green", linetype="dashed") +
   stat_function(fun=relArea(20, r), geom="line", color="red", linetype="dashed") +
   xlab("h") +
-  ylab("relative volume")
+  ylab("relative volume/area")
+
+ggplot(data.frame(x=c(0, 0.2)), aes(x=x)) +
+  stat_function(fun=pbetaX(3, r), geom="line", color="black") +
+  stat_function(fun=pbetaX(6, r), geom="line", color="blue") +
+  stat_function(fun=pbetaX(10, r), geom="line", color="green") +
+  stat_function(fun=pbetaX(20, r), geom="line", color="red") +
+  xlab("h") +
+  ylab("pbeta")
+
+
+
