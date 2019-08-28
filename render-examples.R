@@ -79,6 +79,11 @@ colnames(ex9) <- c("x1", "x2", "x3", "x4")
 anchorT <- c(0.5, 0.5, 0.5, 0.5)
 animate_slice(ex9, anchor=anchorT)
 
+ex10 <- geozoo::torus(p=4)$points %>%
+  scale()
+colnames(ex10) <- c("x1", "x2", "x3", "x4")
+animate_slice(ex10, eps=0.01)
+
 # Classical pollen data: this doesn't work, structure is 2D in 5D so mostly missed
 library(animation)
 data(pollen)
