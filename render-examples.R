@@ -88,7 +88,7 @@ animate_slice(ex10, eps=0.01)
 library(animation)
 data(pollen)
 pollen <- as.matrix(pollen)
-animate_slice(pollen, axes = "bottomleft", eps=0.01, rescale=TRUE)
+animate_slice(pollen, axes = "bottomleft", eps=0.0001, rescale=TRUE)
 
 # Could we look at nonlinear boundaries between classifiers
 library(RColorBrewer)
@@ -98,5 +98,5 @@ clrs <- brewer.pal(3, "Dark2")
 col <- clrs[as.numeric(as.factor(wine_poly$type))]
 animate_slice(as.matrix(wine_poly[,1:5]), axes = "bottomleft", 
               eps=0.001, col=col)
-
+animate_xy(as.matrix(wine_poly[,1:5]), axes = "bottomleft", col=col)
 
