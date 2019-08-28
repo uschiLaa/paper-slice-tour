@@ -66,7 +66,7 @@ hPerRelVol <- function(n, r){
       x <- 1 - vrel
       a <- (n+1) / 2
       b <- 1/2
-      1 - Rbeta.inv(x, a, b)
+      r * sqrt(1 - Rbeta.inv(x, a, b))
     }
 }
 
