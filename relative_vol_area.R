@@ -148,7 +148,7 @@ hrelForVrel <- function(vrel, r){
   )
 }
 
-ggplot(data.frame(x=c(3, 10)), aes(x=x)) +
+ggplot(data.frame(x=c(3, 50)), aes(x=x)) +
   stat_function(fun=hrelForVrel(0.001, r), geom="line", color="black") +
   stat_function(fun=hrelForVrel(0.01, r), geom="line", color="blue") +
   stat_function(fun=hrelForVrel(0.05, r), geom="line", color="green") +
