@@ -9,6 +9,15 @@ relVol <- function(n, r){
   }
 }
 
+#WRONG
+relVol <- function(n, r){
+  Vectorize(
+  function(h){
+    (h/r)*(1/sqrt(pi))*(gamma((n/2)+1) / gamma(((n-1)/2) + 1))
+  }
+  )
+}
+
 relArea <- function(n, r){
   function(h){
     x <- 1 - (h/r)^2
@@ -40,7 +49,7 @@ ggplot(data.frame(x=c(0.01, 0.5)), aes(x=x)) +
   xlab("h") +
   ylab("relative volume/area")
 
-ggplot(data.frame(x=c(0.01, 0.2)), aes(x=x)) +
+ggplot(data.frame(x=c(0.01, 0.5)), aes(x=x)) +
   stat_function(fun=relVol(3, r), geom="line", color="black") +
   stat_function(fun=relVol(4, r), geom="line", color="blue") +
   stat_function(fun=relVol(5, r), geom="line", color="green") +
@@ -77,3 +86,42 @@ ggplot(data.frame(x=c(0.01, 0.2)), aes(x=x)) +
   stat_function(fun=hPerRelVol(6, r), geom="line", color="red") +
   xlab("relative volume") +
   ylab("h")
+
+
+### as simulation
+
+inSliceFracFull <- function(n, nPt=100000){
+  Vectorize(
+  function(h){
+    d <- geozoo::sphere.solid.random(n, nPt)$points
+    anchor <- rep(0, n)
+    plane <- tourr::basis_init(n, 2)
+    distV <- tourr::anchored_orthogonal_distance(plane, d, anchor)
+    sum(distV < h) / nPt
+  }
+  )
+}
+
+inSliceFracHollow <- function(n, nPt=100000){
+  Vectorize(
+  function(h){
+    d <- geozoo::sphere.hollow(n, nPt)$points
+    anchor <- rep(0, n)
+    plane <- tourr::basis_init(n, 2)
+    distV <- tourr::anchored_orthogonal_distance(plane, d, anchor)
+    sum(distV < h) / nPt
+  }
+  )
+}
+
+ggplot(data.frame(x=c(0.01, 0.5)), aes(x=x)) +
+  stat_function(fun=inSliceFracFull(3), geom="line", color="black") +
+  stat_function(fun=inSliceFracFull(4), geom="line", color="blue") +
+  stat_function(fun=inSliceFracFull(5), geom="line", color="green") +
+  stat_function(fun=inSliceFracFull(6), geom="line", color="red") +
+  stat_function(fun=inSliceFracHollow(3), geom="line", color="black", linetype="dashed") +
+  stat_function(fun=inSliceFracHollow(4), geom="line", color="blue", linetype="dashed") +
+  stat_function(fun=inSliceFracHollow(5), geom="line", color="green", linetype="dashed") +
+  stat_function(fun=inSliceFracHollow(6), geom="line", color="red", linetype="dashed") +
+  xlab("h") +
+  ylab("relative volume/area")

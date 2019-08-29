@@ -89,6 +89,9 @@ XXX Example 2x2, row 1-col 1 has a slice projection  of a solid 4D spehere, row 
 
 ### Slice thickness
 
+XXXX maybe the problem is that each plane is 2d, but the cap assumes I am cutting with a hyperplane that is n-1, so it works as expected in 3d, beyond that i need to account for volume effects in the n-2 dimensions, but how?
+e.g. consider 1-d sliced of 3d sphere, in that case I get the volume of the slice as a pipe of radius h, so for n-d sphere I need the volume of n-1 d sphere of radius h but translated across the plane (but what does that really mean)?
+
 The thickness of the slice should be chosen such that enough points are inside the slice be representative of the distribution. This will depend on the total number of points in the dataset, its original dimensionality and on the distribution. Here we estimate the number of points inside a slice of thickness $h$ for the rotation invariant example of an $n$ dimensional full hypersphere with radius $R$, assuming uniformly distributed points throughout the sphere. This means we calculate the relative volume inside the slice as a function of $h$ and $n$.
 
 The total volume of the full hypersphere is given as
@@ -110,9 +113,6 @@ In the case of a hollow hypersphere we are instead interested in the relative ar
 \begin{equation}
 A_n^h(R) = \frac{A_n(R) - 2 A^{\phi}_n(R)}{A_n(R)} = 1 - I_{1-\frac{h^2}{r^2}}(\frac{n-1}{2},\frac{1}{2}).
 \end{equation}
-
-XXXX not sure this makes sense, need to check against plots (not what I was expecting, need to think about this more)
-Best guess is that relation between $\phi$ and $h$ only holds for 3d sphere, how can I generalise it?
 
 ### Anchoring
 
