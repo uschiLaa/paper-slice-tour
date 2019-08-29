@@ -13,7 +13,7 @@ relVol <- function(n, r){
 relVol <- function(n, r){
   Vectorize(
   function(h){
-    ((2*h/r)^(n-2)) * (pi^(1-n/2)) * (gamma((n/2)+1))
+    (((2*h)/r)^(n-2)) * (pi^((4-n)/2)) * (gamma((n/2)+1))
   }
   )
 }
@@ -121,3 +121,41 @@ ggplot(data.frame(x=c(0.01, 0.5)), aes(x=x)) +
   stat_function(fun=inSliceFracHollow(6), geom="line", color="red", linetype="dashed") +
   xlab("h") +
   ylab("relative volume/area")
+
+
+relVolCube <- function(p, r){
+  Vectorize(
+    function(h){
+      (h/(2*r))^(p-2)
+    }
+  )
+}
+
+ggplot(data.frame(x=c(0.01, 0.5)), aes(x=x)) +
+  stat_function(fun=relVolCube(3, r), geom="line", color="black") +
+  stat_function(fun=relVolCube(4, r), geom="line", color="blue") +
+  stat_function(fun=relVolCube(5, r), geom="line", color="green") +
+  stat_function(fun=relVolCube(6, r), geom="line", color="red") +
+  xlab("h") +
+  ylab("relative volume/area")
+
+
+hForVrel <- function(vrel, r){
+  Vectorize(
+    function(p){
+      (2 * r * vrel^(2-p))
+    }
+  )
+}
+
+#### completely off....h up to 1e+46 does not make sense...
+ggplot(data.frame(x=c(3, 20)), aes(x=x)) +
+  stat_function(fun=hForVrel(0.001, r), geom="line", color="black") +
+  stat_function(fun=hForVrel(0.01, r), geom="line", color="blue") +
+  stat_function(fun=hForVrel(0.05, r), geom="line", color="green") +
+  stat_function(fun=hForVrel(0.1, r), geom="line", color="red") +
+  xlab("p") +
+  ylab("h") +
+  scale_y_log10()
+
+
