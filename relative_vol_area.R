@@ -9,11 +9,11 @@ relVol <- function(n, r){
   }
 }
 
-#WRONG
+#almost right
 relVol <- function(n, r){
   Vectorize(
   function(h){
-    (h/r)*(1/sqrt(pi))*(gamma((n/2)+1) / gamma(((n-1)/2) + 1))
+    ((2*h/r)^(n-2)) * (pi^(1-n/2)) * (gamma((n/2)+1))
   }
   )
 }
@@ -54,10 +54,6 @@ ggplot(data.frame(x=c(0.01, 0.5)), aes(x=x)) +
   stat_function(fun=relVol(4, r), geom="line", color="blue") +
   stat_function(fun=relVol(5, r), geom="line", color="green") +
   stat_function(fun=relVol(6, r), geom="line", color="red") +
-  stat_function(fun=relArea(3, r), geom="line", color="black", linetype="dashed") +
-  stat_function(fun=relArea(4, r), geom="line", color="blue", linetype="dashed") +
-  stat_function(fun=relArea(5, r), geom="line", color="green", linetype="dashed") +
-  stat_function(fun=relArea(6, r), geom="line", color="red", linetype="dashed") +
   xlab("h") +
   ylab("relative volume/area")
 

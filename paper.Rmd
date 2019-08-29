@@ -139,7 +139,18 @@ Using the generalized distance measure with a cutoff volume $\epsilon$ then corr
 
 The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the anchor point $\alpha$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the origin. In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice  = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside.
 
-XXX R code
+```{r codeExampel, echo=TRUE, eval=FALSE}
+library(tourr)
+# use geozoo to generate points on a hollow 3d sphere
+sphere3 <- geozoo::sphere.hollow(3)$points
+colnames(sphere3) <- c("x1", "x2", "x3") # naming variables
+# slice tour animation with default settings
+animate_slice(sphere3)
+# trying an off-center anchor point, thicker slice, and
+# we use pch=26 to hide points outside the slice
+anchor3 <- rep(0.7, 3)
+animate_slice(sphere3, anchor = anchor3, eps = 0.005, pch_other=26)
+```
 
 # Examples
 
