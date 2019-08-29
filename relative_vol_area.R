@@ -140,22 +140,20 @@ ggplot(data.frame(x=c(0.01, 0.5)), aes(x=x)) +
   ylab("relative volume/area")
 
 
-hForVrel <- function(vrel, r){
+hrelForVrel <- function(vrel, r){
   Vectorize(
     function(p){
-      (2 * r * vrel^(2-p))
+      (2 * r * vrel^(1/(p-2)))/(2*r)
     }
   )
 }
 
-#### completely off....h up to 1e+46 does not make sense...
-ggplot(data.frame(x=c(3, 20)), aes(x=x)) +
-  stat_function(fun=hForVrel(0.001, r), geom="line", color="black") +
-  stat_function(fun=hForVrel(0.01, r), geom="line", color="blue") +
-  stat_function(fun=hForVrel(0.05, r), geom="line", color="green") +
-  stat_function(fun=hForVrel(0.1, r), geom="line", color="red") +
+ggplot(data.frame(x=c(3, 10)), aes(x=x)) +
+  stat_function(fun=hrelForVrel(0.001, r), geom="line", color="black") +
+  stat_function(fun=hrelForVrel(0.01, r), geom="line", color="blue") +
+  stat_function(fun=hrelForVrel(0.05, r), geom="line", color="green") +
+  stat_function(fun=hrelForVrel(0.1, r), geom="line", color="red") +
   xlab("p") +
-  ylab("h") +
-  scale_y_log10()
+  ylab("h/r")
 
 
