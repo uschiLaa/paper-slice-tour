@@ -46,7 +46,7 @@ Modern data is typically high-dimensional and thus data visualisation often reli
 A major limitation of projections is their opacity, even if mitigated somewhat through the pseudo-transparancy present in sparse scatterplots. As a result certain features of distributions may easily be hidden in projections, especially in the case of concave structures. Considering the example of a simple geometric shape such as a hypershere, we understand that projections cannot distinguish between a full or a hollow sphere. Similarly we can think of small scale structures hidden in the center of a multivariate distribution. Again projections will not help in findig such features in a distribution. Other examples where the use of projections is limited include the visualisation of non-linear boundaries between groups, that will be obscured in each projection.
 
 <!-- Our approach: introduce sections; many different ways to slice, refer to linked brushing as slicing whcih mirrors prosection, but here we will explain/utilise a simple slicing on the projection where point in orthogonal space are faded. -->
-We can overcome these limitations when adding section information, see e.g. @prosection. For our example of the hypersphere, we can clearely identify a hollow sphere when looking at a slice throught the distribution, where all points will lie on a circle in a 2d slice. In practice there are many different ways to slice, typically facilitated through linked brushing (e.g. @ggobiCSDA2003, @JSSv081i05), where the user is selecting a region in a subspace of the dataspace that is highlighted in a projection of the data points. These systems are interactive, and rely on the user to redefine the section many times to fully explore the data in this way. In this note we introduce a simple slicing method for projections where points in the orthogonal space are faded. Combining it with the grand tour results in a new dynamic display that can be used to systematically search for features hidden in sections.
+We can overcome these limitations when adding section information, see e.g. @prosection. For our example of the hypersphere, we can clearely identify a hollow sphere when looking at a slice throught the distribution, where all points will lie on a circle in a 2d slice. Note that there are many ways to define a slice through high-dimensional data. In practice, slicing is typically facilitated through linked brushing (e.g. @ggobiCSDA2003, @JSSv081i05), where the user is selecting a region in a subspace of the dataspace that is highlighted in a projection of the data points. These systems are interactive, and rely on the user to redefine the section many times to explore the data in this way. In this note we introduce a simple slicing method for projections where points in the orthogonal space are faded. Combining it with the grand tour results in a new dynamic display that can be used to systematically search for features hidden in sections.
 
 
 <!-- paper structure --> 
@@ -58,9 +58,9 @@ The basis underlying our approach is the grand tour. We first briefly review the
 
 ## Tour review
 
-A tour is providing a continuous animation, showing a sequence of $d$-dimensional (typically $d=1$ or $2$) projections from $n$-dimensional parameter space. The tour combines basis selection with basis interpolation. In a grand tour the basis selection is random (each new basis is chosen from all possible projections), and typically geodesic interpolation is used to generate smooth transitions between viewing planes. Different basis selection methods as well as the geodesic interpolation are implemented in the `tourr` package [@tourr] in R [@rref], which also provides several display functions for viewing the tour.
+A tour is providing a continuous animation, showing a sequence of $d$-dimensional (typically $d=1$ or $2$) projections from $p$-dimensional parameter space. The tour combines basis selection with basis interpolation. In a grand tour the basis selection is random (each new basis is chosen from all possible projections), and typically geodesic interpolation is used to generate smooth transitions between viewing planes. Different basis selection methods as well as the geodesic interpolation are implemented in the `tourr` package [@tourr] in R [@rref], which also provides several display functions for viewing the tour.
 
-The notation used in the following for the description of each projection is denoting $\mathbf{X}$ the $m\times n$ dimensional data matrix ($m$ observations in $n$ dimensions) and $\mathbf{A}$ an orthonormal $n \times d$ projection matrix. The $d$-dimensional projection of the data is thus given by $\mathbf{Y} = \mathbf{X}\cdot\mathbf{A}$, giving the $n\times d$ dimensional projected data matrix to be plotted in each frame of the tour display.
+The notation used in the following for the description of each projection is denoting $\mathbf{X}$ the $n\times p$ dimensional data matrix ($n$ observations in $p$ dimensions) and $\mathbf{A}$ an orthonormal $p \times d$ projection matrix. The $d$-dimensional projection of the data is thus given by $\mathbf{Y} = \mathbf{X}\cdot\mathbf{A}$, giving the $n\times d$ dimensional projected data matrix to be plotted in each frame of the tour display.
 
 In the following we are interested in the orthogonal distance of scatter points from an anchored projection plane, thus $d=2$. 
 
@@ -72,14 +72,14 @@ In addition to the projected data $\mathbf{Y}$ we calculate for each projection 
 \begin{equation}
 x_i' = x_i - (x_i\cdot a_1) a_1 - (x_i\cdot a_2) a_2
 \end{equation}
-with $x_i, i=1,...,m$ an $n$-dimensional observation in $\mathbf{X}$ and $a_i, i=1,2$ denoting the columns of the projection matrix, $\mathbf{A}=(a_1, a_2)$.
+with $x_i, i=1,...,n$ an $p$-dimensional observation in $\mathbf{X}$ and $a_i, i=1,2$ denoting the columns of the projection matrix, $\mathbf{A}=(a_1, a_2)$.
 Calculating the euclidean norm of $x'$ is straightforward thanks to the orthonormality of $\mathbf{A}$, and gives the components of the required distance vector.
 \begin{equation}
 \tilde{v}_i^2 = ||x_i'||^2 = x_i^2 - (x_i\cdot a_1)^2 - (x_i\cdot a_2)^2.
 \end{equation}
 We also see that this is trivially generalizing for orthonormal projection matrices with $d>2$.
 
-The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In general a larger cutoff value and/or much larger sample sizes are required as the original dimensionality ($n$) increases. For practical purposes we therefore specify a volume $\epsilon$ and then use as a cutoff $h = \epsilon^{1/n}$.
+The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In general a larger cutoff value and/or much larger sample sizes are required as the original dimensionality ($p$) increases. For practical purposes we therefore specify a volume $\epsilon$ and then use as a cutoff $h = \epsilon^{1/(p-2)}$. XXX not yet implemented that way, based on thickness estimates
 
 ```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Projected slices through 4d geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display."}
 library(tidyverse)
@@ -106,7 +106,6 @@ d1 <- geozoo::sphere.solid.random(4, nPt)$points
 d2 <- geozoo::sphere.hollow(4, nPt)$points
 d3 <- geozoo::cube.solid.random(4)$points[1:nPt,] %>% scale(scale = FALSE)
 d4 <- geozoo::cube.face(4)$points[1:nPt,] %>% scale(scale = FALSE)
-
 
 a <- render_data(d1, plane, 0.2, anchor) + labs(title="a")
 b <- render_data(d2, plane, 0.2, anchor) + labs(title="b")
@@ -178,24 +177,19 @@ animate_slice(sphere3, anchor = anchor3, eps = 0.005, pch_other=26)
 
 XXX choose 6
 
-To demonstrate the slice tour we sample points on the surface of a sphere with radius $r=1$ in $n=3$ and $n=5$ dimensions. We use the `geozoo` package [@geozoo] to draw 2000 (5000) points on the 3d (5d) sphere.
+To demonstrate the slice tour we sample points on the surface of a sphere with radius $r=1$ in $p=3$ and $p=5$ dimensions. We use the `geozoo` package [@geozoo] to draw 2000 (5000) points on the 3d (5d) sphere.
 
-For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.001$, i.e. $h = 0.1$ in 3d and $h = 0.25$ in 5d. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius. Snapshots of the slice tour animation are shown in Figure \ref{fig:centered}, animated gifs are available at XXX. Notice that the larger number of points and increased thickness parameter $h$ do not make up for the reduced number of points inside the slice through the 5d hypersphere. (projected points are on average closer to the center as we increase the dimension of the hypersphere, is there some convergence similar to central limit theorem at play?)
+For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.001$, i.e. $h = 0.1$ in 3d and $h = 0.25$ in 5d. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure~\ref{fig:renderFunction}. The animated gifs are available at XXX.
 
-\begin{figure*}[ht]
-\centerline{\includegraphics[width=0.3\textwidth]{gifs/png/sphere-3-centered-055.png}\hspace{1cm}
-\includegraphics[width=0.3\textwidth]{gifs/png/sphere-5-centered-055.png}}
-\caption{Slice through a 3d (left) and 5d (right) hollow sphere, anchored at the origin. Points inside the slice are highlighted with a bullet marker and are found on a circle with the radius of the hypersphere, $r$.}
-\label{fig:centered}
-\end{figure*}
-
-It is also instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3d sphere with $r=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $r$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<r$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis.
+It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3d sphere with $r=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $r$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<r$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis.
 
 
 \begin{figure*}[ht]
-\centerline{\includegraphics[width=0.3\textwidth]{gifs/png/sphere-3-anchored-033.png}
-\includegraphics[width=0.3\textwidth]{gifs/png/sphere-3-anchored-036.png}
-\includegraphics[width=0.3\textwidth]{gifs/png/sphere-3-anchored-041.png}}
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-033.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-036.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-041.png}}
 \caption{Different slices through a 3d hollow sphere with $r=1$, with anchor point $(0.7, 0.7, 0.7)$, showing full circle with small radius (left), circle with radius $<r$ (middle) and circle with radius $r$ (right).}
 \label{fig:3anchored}
 \end{figure*}
@@ -208,6 +202,6 @@ In this note we introduce a new visualization method for systematic slicing of h
 
 In applications with large number of dimensions and where only a few samples are available the method is limited. In this case thick slices may be needed to get a sufficient number of observations inside the slice, and as a result  small scale concavities cannot be resolved in the slice tour. If on the other hand a large number of samples are available one may consider displaying only points inside the slice to keep a clear display.
 
-Instead of slicing in the full $n-d=n-2$ dimensional orthogonal space we can also use a subspace in which to slice. As pointed out in @prosection combining projections with sectioning in varying numbers of dimensions can reveal the codimension of an unknown distribution. One approach would be to interpolate between projection matrices with more than two columns, and use the first two for the display projection. The remaining directions then provide an orthogonal subspace that can be used for sectioning. A subtlety to consider is that geodesic interpolation is not ideal for such applications, as it ignores rotations between the directions in the projection matrix. As alternative interpolation methods are not currently available in the R implementation, we leave such extensions for future work.
+Instead of slicing in the full $p-d=p-2$ dimensional orthogonal space we can also use a subspace in which to slice. As pointed out in @prosection combining projections with sectioning in varying numbers of dimensions can reveal the codimension of an unknown distribution. One approach would be to interpolate between projection matrices with more than two columns, and use the first two for the display projection. The remaining directions then provide an orthogonal subspace that can be used for sectioning. A subtlety to consider is that geodesic interpolation is not ideal for such applications, as it ignores rotations between the directions in the projection matrix. As alternative interpolation methods are not currently available in the R implementation, we leave such extensions for future work.
 
-We also expect interesting new developments by combining the slice tour and the guided tour into a weighted guided tour with index functions using the distance vector information in addition to the projected data points.
+In addition slice definitions beyond a simple cutoff on the orthogonal distance should be considered, where different definition can be used to highlight certain aspects of the data. We also expect interesting new developments by combining the slice tour and the guided tour into a weighted guided tour with index functions using the distance vector information in addition to the projected data points.
