@@ -85,30 +85,20 @@ XXX Example 2x2, row 1-col 1 has a slice projection  of a solid 4D spehere, row 
 
 ### Slice thickness
 
-XXXX maybe the problem is that each plane is 2d, but the cap assumes I am cutting with a hyperplane that is n-1, so it works as expected in 3d, beyond that i need to account for volume effects in the n-2 dimensions, but how?
-e.g. consider 1-d sliced of 3d sphere, in that case I get the volume of the slice as a pipe of radius h, so for n-d sphere I need the volume of n-1 d sphere of radius h but translated across the plane (but what does that really mean)?
+Choosing the slice thickness is a compromise between what feature size can be revealed and how many points fall inside a thin slice. As dimensionality increases, the relative number of points that are inside a slice of fixed thickness will decrease. The exact relation depends heavily on the distribution of the data points. Here we present expressions for spectial cases to get an idea of this scaling.
 
-The thickness of the slice should be chosen such that enough points are inside the slice be representative of the distribution. This will depend on the total number of points in the dataset, its original dimensionality and on the distribution. Here we estimate the number of points inside a slice of thickness $h$ for the rotation invariant example of an $n$ dimensional full hypersphere with radius $R$, assuming uniformly distributed points throughout the sphere. This means we calculate the relative volume inside the slice as a function of $h$ and $n$.
+We first consider as a simple example a hypercube that is sliced along two of the paremeters (note that a cube is not rotation invariant). To estimate the relative number of points in a slice of thickness $2h$ we calculate the relative volume of the slice compared to the full hypercube:
+\begin{equation}
+V_{rel} = \frac{V_{slice}}{V_{cube}} = \frac{(2r)^2 * (2h)^{p-2}}{(2r)^p} = (\frac{h}{r})^{p-2},
+\end{equation}
+where the cube side lenght is $2r$. Thus if we want to keep the relative number of points (i.e. $V_{rel}$) constant for slices in different $p$ we calculate $h$ from a fixed volume parameter as $h = \epsilon^{1/(p-2)}$.
 
-The total volume of the full hypersphere is given as
+Considering now slicing through a multivariate normal, we can estimate the number of points in a slice by integrating the probability distribution with boundaries $\pm h$ in $p-2$. In this case the relative density scales with the error function as
 \begin{equation}
-V_n(R) = \frac{\pi^{n/2}}{\Gamma(\frac{n}{2} + 1)} R^n.
+\rho_{rel} = \pi^{(2-p)/2} \mathrm{erf}((h/\sqrt 2 \sigma)) ^{p-2}.
 \end{equation}
-To calculate the volume of the slice we subtract the volume of a hypersphere cap of hight $h'=r-h$, as given in @capVol,
-\begin{equation}
-V^{\phi}_n(R) = \frac{1}{2}V_n(R) I_{sin^2\phi}(\frac{n+1}{2},\frac{1}{2}),
-\end{equation}
-where $I$ is the regularized incomplete beta function and $\phi =\arccos(1-\frac{h'}{r}) = \arccos(\frac{h}{r})$ the colatitude angle (XXX got this off the paper, don't yet understand the angle..).
-The relative volume of the slice is thus given as (XXX better names needed!)
-\begin{equation}
-V_n^h(R) = \frac{V_n(R) - 2 V^{\phi}_n(R)}{V_n(R)} = 1 - I_{1-\frac{h^2}{r^2}}(\frac{n+1}{2},\frac{1}{2}),
-\end{equation}
-using $\sin(\arccos(x)) = \sqrt{1-x^2}$.
 
-In the case of a hollow hypersphere we are instead interested in the relative area inside the slice. We use the cap area derived in @capVol to calculate the area inside the slice as
-\begin{equation}
-A_n^h(R) = \frac{A_n(R) - 2 A^{\phi}_n(R)}{A_n(R)} = 1 - I_{1-\frac{h^2}{r^2}}(\frac{n-1}{2},\frac{1}{2}).
-\end{equation}
+XXX two plots: vrel/rhorel scaling with h for n for p = 3, 4, 5, 10, and h scaling with p for vrel = 0.001, 0.01, 0.05 and 0.1
 
 ### Anchoring
 
