@@ -34,7 +34,7 @@ output: rticles::tf_article
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
 # Introduction
@@ -81,7 +81,43 @@ We also see that this is trivially generalizing for orthonormal projection matri
 
 The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In general a larger cutoff value and/or much larger sample sizes are required as the original dimensionality ($n$) increases. For practical purposes we therefore specify a volume $\epsilon$ and then use as a cutoff $h = \epsilon^{1/n}$.
 
-XXX Example 2x2, row 1-col 1 has a slice projection  of a solid 4D spehere, row 1-col 2 has a slice projectionof a hollow 4D sphere; row 2-col 1 has a slice projection of a  solid 4D cube, row 1-col 2 has a slice projection of a hollow 4D cube
+```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Projected slices through 4d geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display."}
+library(tidyverse)
+
+# slight modification of the function in tourr::display_slice
+render_data <- function(data, proj, h, anchor) {
+    # Render projected points
+    x <- data %*% proj
+    d <- tourr::anchored_orthogonal_distance(proj, data, anchor)
+    pch <- rep(46, nrow(x))
+    pch[d < h] <- 20
+    col <- rep("grey", nrow(x))
+    col[d < h] <- "black"
+    ggplot() +aes(x[,1], x[,2]) + geom_point(pch = pch, color=col) + theme_void() + coord_fixed()
+}
+
+anchor <- rep(0, 4)
+plane <- tourr::basis_init(4, 2)
+nPt <- 5000
+
+set.seed(3008)
+
+d1 <- geozoo::sphere.solid.random(4, nPt)$points
+d2 <- geozoo::sphere.hollow(4, nPt)$points
+d3 <- geozoo::cube.solid.random(4)$points[1:nPt,] %>% scale(scale = FALSE)
+d4 <- geozoo::cube.face(4)$points[1:nPt,] %>% scale(scale = FALSE)
+
+
+a <- render_data(d1, plane, 0.2, anchor) + labs(title="a")
+b <- render_data(d2, plane, 0.2, anchor) + labs(title="b")
+c <- render_data(d3, plane, 0.2, anchor) + labs(title="c")
+d <- render_data(d4, plane, 0.2, anchor) + labs(title="d")
+
+library(gridExtra)
+grid.arrange(a, b, c, d, nrow=1)
+
+```
+
 
 ### Slice thickness
 
