@@ -218,8 +218,39 @@ To better understand the slice tour we look at different examples of geometric s
 ## Other examples
 
 ### Needle in a haystack
+We use the pollen data as an example for a hidden feature generally occluded in projections. This 1986 Exposition's dataset was made by David Coleman of RCA Labs. The artificially generated data is comprised of 3848 observations on 5 variables. We center and scale each variable of the dataset and run a slice tour with a thin slice ($\epsilon = 0.0005$). Selected views are shown in the first two plots in Figure \ref{fig:pollen}, indicating the presence of an interesting feature hidden in the center. We next zoom in on the center of the distribution and consider a thicker slice ($\epsilon = 0.005$) to uncover the hidden structure, shown in the last two plots of Figure \ref{fig:pollen}.
+
+\begin{figure*}[ht]
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/pollen-007.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/pollen-092.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/pollen-zoom-075.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/pollen-zoom-018.png}
+}
+\caption{Different slices through the pollen dataset. The first two plots have slice volume $\epsilon = 0.0005$, the last two plots zoom in on the center and have increased volume $\epsilon = 0.005$.}
+\label{fig:pollen}
+\end{figure*}
 
 ### Non-linear boundaries
+XXX say something about this dataset [@sam.11271]
+
+Selected views from a slice tour of the scaled and centered data, and with large slice volume $\epsilon = 0.15$ are shown in Figure \ref{fig:wine}. The slices allow to clearly see the non-linearity of the boundary between the green and orange group. The first view also shows a non-linear boundary of the purple group, which interestingly does not appear at all in the second slice shown here.
+
+\begin{figure*}[ht]
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/wine-029.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/wine-042.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/wine-049.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/wine-100.png}
+}
+\caption{Different slices through the wine dataset.}
+\label{fig:wine}
+\end{figure*}
+
 
 # Summary and Outlook
 
