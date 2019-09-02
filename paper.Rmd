@@ -151,9 +151,7 @@ In general $\alpha$ can be any point in the $n$-dimensional parameter space, but
 \begin{equation}
 v_i^2 = ||x_i' - \alpha'||^2 = x_i'^2 + \alpha'^2 - 2 x_i'\cdot\alpha'
 \end{equation}
-
 where the cross term can be expressed as
-
 \begin{equation}
 x_i'\cdot\alpha' = x_i\cdot\alpha - (\alpha\cdot a_1) (x_i\cdot a_1) - (\alpha\cdot a_2) (x_i\cdot a_2).
 \end{equation}
