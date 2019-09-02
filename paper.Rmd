@@ -17,6 +17,7 @@ affiliation:
     address: |
       Department of Econometrics and Business Statistics, Monash University
 bibliography: biblio.bib
+geometry: margin=2.5cm
 abstract: |
   Projections and sectioning are complementary methods for the visualisation of
   high-dimensional data. In this note we describe slicing in the orthogonal
@@ -30,7 +31,7 @@ header-includes: |
   \usepackage{hyperref}
   \usepackage[utf8]{inputenc}
   \def\tightlist{}
-  \usepackage{setspace}\doublespacing
+  \usepackage{setspace}
 output: rticles::tf_article
 ---
 
@@ -38,6 +39,7 @@ output: rticles::tf_article
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
+\doublespacing
 # Introduction
 
 <!-- Background -->
@@ -80,9 +82,9 @@ Calculating the euclidean norm of $x'$ is straightforward thanks to the orthonor
 \end{equation}
 We also see that this is trivially generalizing for orthonormal projection matrices with $d>2$.
 
-The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. Notice that in 3d, where for each plane we have one well-defined orthogonal direction, this defines a flat slice of hight $2*h$, matching the common conception of a slice. When going beyond 3d, the codimension of the plane is $>1$ and using the euclidean distance results in rotation invariant slicing in the orthogonal space. As a consequence the "slices" are now spherical in the orthogonal subspace, with radius $h$.
+The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. Notice that in 3d, where for each plane we have a single orthogonal direction, this defines a flat slice of hight $2*h$, matching the common conception of a slice. When going beyond 3d, the codimension of the plane is $>1$ and using the euclidean distance results in rotation invariant slicing in the orthogonal space. As a consequence the "slices" are now spherical in the orthogonal subspace, with radius $h$.
 
-```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Projected slices through 4d geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display."}
+```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Projected slices through 4d geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display.\\label{fig:renderFunction}"}
 library(tidyverse)
 
 # slight modification of the function in tourr::display_slice
@@ -178,15 +180,14 @@ animate_slice(sphere3, anchor = anchor3, eps = 0.005, pch_other=26)
 ```
 
 # Examples
-
 XXX choose 6
 
-To demonstrate the slice tour we sample points on the surface of a sphere with radius $r=1$ in $p=3$ and $p=5$ dimensions. We use the `geozoo` package [@geozoo] to draw 2000 (5000) points on the 3d (5d) sphere.
-
+## Geometric shapes
+### Hollow sphere
+We sample points on the surface of a sphere with radius $r=1$ in $p=3$ and $p=5$ dimensions. Using the `geozoo` package [@geozoo], we draw 2000 (5000) points that are uniformly distributed on the surface of a 3d (5d) sphere.
 For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.001$, i.e. $h = 0.1$ in 3d and $h = 0.25$ in 5d. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure~\ref{fig:renderFunction}. The animated gifs are available at XXX.
 
-It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3d sphere with $r=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $r$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<r$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis.
-
+It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3d sphere with $r=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $r$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<r$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5d sphere. Note however that as dimensionality increases, the larger orthogonal space means that the anchor point will have a large orthogonal component in most views.
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-033.png}
@@ -198,7 +199,15 @@ It is especially instructive to look at the sliced spheres with an off-center an
 \label{fig:3anchored}
 \end{figure*}
 
-The same behavior is observed when slicing the 5d hollow sphere with an off-center anchor point, however a large number of sample points is required to get a similarly clear display to that found for the 3d sphere. The animation showing the anchored slice tour of the 5d hollow sphere with 5000 sample points is available at XXX. In this example the anchor point was fixed to $(0.5,0.5,0.5,0.5,0.5)$.
+### Other geometric shapes
+
+Examples: 4d cube, 4d torus
+
+## Other examples
+
+### Needle in a haystack
+
+### Non-linear boundaries
 
 # Summary and Outlook
 

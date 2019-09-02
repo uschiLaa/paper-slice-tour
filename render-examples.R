@@ -29,7 +29,11 @@ render(sphere3, grand_tour(), display_slice(anchor = anchor3), 'png', "gifs/png/
 set.seed(2019)
 render(sphere5, grand_tour(), display_slice(anchor = anchor5), 'png', "gifs/png/sphere-5-anchored-%03d.png", frames = max_f, rescale = FALSE)
 
-
+#testing out different anchor in 5d with large sample
+sphere5 <- geozoo::sphere.hollow(5, 50000)$points
+colnames(sphere5) <- c("x1", "x2", "x3", "x4", "x5")
+anchor5 <- c(1.1, 0, 0, 0, 0)
+animate(sphere5, grand_tour(), display_slice(anchor = anchor5), rescale = FALSE)
 
 ### playing with other exampels
 
