@@ -30,6 +30,7 @@ header-includes: |
   \usepackage{hyperref}
   \usepackage[utf8]{inputenc}
   \def\tightlist{}
+  \usepackage{setspace}\doublespacing
 output: rticles::tf_article
 ---
 
@@ -79,7 +80,7 @@ Calculating the euclidean norm of $x'$ is straightforward thanks to the orthonor
 \end{equation}
 We also see that this is trivially generalizing for orthonormal projection matrices with $d>2$.
 
-The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In general a larger cutoff value and/or much larger sample sizes are required as the original dimensionality ($p$) increases. For practical purposes we therefore specify a volume $\epsilon$ and then use as a cutoff $h = \epsilon^{1/(p-2)}$. XXX not yet implemented that way, based on thickness estimates
+The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. Notice that in 3d, where for each plane we have one well-defined orthogonal direction, this defines a flat slice of hight $2*h$, matching the common conception of a slice. When going beyond 3d, the codimension of the plane is $>1$ and using the euclidean distance results in rotation invariant slicing in the orthogonal space. As a consequence the "slices" are now spherical in the orthogonal subspace, with radius $h$.
 
 ```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Projected slices through 4d geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display."}
 library(tidyverse)
@@ -120,14 +121,17 @@ grid.arrange(a, b, c, d, nrow=1)
 
 ### Slice thickness
 
-Choosing the slice thickness is a compromise between what feature size can be revealed and how many points fall inside a thin slice. As dimensionality increases, the relative number of points that are inside a slice of fixed thickness will decrease. The exact relation depends heavily on the distribution of the data points. Here we present expressions for spectial cases to get an idea of this scaling.
+Choosing the slice thickness is a compromise between what feature size can be revealed and how many points fall inside a thin slice. As dimensionality $p$ increases, the relative number of points that are inside a slice of fixed thickness $h$ will decrease. The exact relation depends heavily on the distribution of the data points. Here we present expressions for special cases to get an idea of this scaling. For practical purposes we specify a volume $\epsilon$ and then use as a cutoff $h = \epsilon^{1/(p-2)}$. XXX not yet implemented that way, based on thickness estimates.
 
-We first consider as a simple example a hypercube that is sliced along two of the paremeters (note that a cube is not rotation invariant). To estimate the relative number of points in a slice of thickness $2h$ we calculate the relative volume of the slice compared to the full hypercube:
+We consider two types of rotation invariant distributions for our estimates: a hypersphere in $p$ dimensions and a $p$ dimensional normal distribution without correlation.
+
+Let us consider points uniformly distributed in a $p$-dimensional hypersphere. The fraction of points inside a slice of thickness $2*h$ can therefore be estimated as the relative volume of the slice compared to the volume of the full hypersphere,
 \begin{equation}
-V_{rel} = \frac{V_{slice}}{V_{cube}} = \frac{(2r)^2 * (2h)^{p-2}}{(2r)^p} = (\frac{h}{r})^{p-2},
+V_{rel} = \frac{1}{2} \frac{h^{p-2}}{r^p} (p r^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
 \end{equation}
-where the cube side lenght is $2r$. Thus if we want to keep the relative number of points (i.e. $V_{rel}$) constant for slices in different $p$ we calculate $h$ from a fixed volume parameter as $h = \epsilon^{1/(p-2)}$.
+where the approximation is valid when $h \ll r$, as is typically expected to be the case. Thus if we want to keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$. XXXX change code to this? currently $\epsilon^{1/p}$ is implemented...
 
+XXXX need to redo integration of multivariate normal...
 Considering now slicing through a multivariate normal, we can estimate the number of points in a slice by integrating the probability distribution with boundaries $\pm h$ in $p-2$. In this case the relative density scales with the error function as
 \begin{equation}
 \rho_{rel} = \pi^{(2-p)/2} \mathrm{erf}((h/\sqrt 2 \sigma)) ^{p-2}.
