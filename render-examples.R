@@ -29,6 +29,52 @@ render(sphere3, grand_tour(), display_slice(anchor = anchor3), 'png', "gifs/png/
 set.seed(2019)
 render(sphere5, grand_tour(), display_slice(anchor = anchor5), 'png', "gifs/png/sphere-5-anchored-%03d.png", frames = max_f, rescale = FALSE)
 
+torus4 <- geozoo::torus(p=4)$points %>%
+  scale()
+colnames(torus4) <- c("x1", "x2", "x3", "x4")
+set.seed(2019)
+render(torus4, grand_tour(), display_slice(eps=0.2), 'png', "gifs/png/torus-4-centered-%03d.png", frames = max_f, rescale = FALSE)
+
+cube6 <- geozoo::cube.face(6)$points %>%
+  center()
+colnames(cube6) <- c("x1", "x2", "x3", "x4", "x5", "x6")
+set.seed(2019)
+render(cube6, grand_tour(), display_slice(), 'png', "gifs/png/cube-6-centered-%03d.png", frames = max_f, rescale = FALSE)
+
+cubeAnchor <- c(1, 0, 0, 0, 0, 0)
+set.seed(2019)
+render(cube6, grand_tour(), display_slice(anchor = cubeAnchor), 'png', "gifs/png/cube-6-anchored-%03d.png", frames = max_f, rescale = FALSE)
+
+rmS <- geozoo::roman.surface()$points %>%
+  scale()
+colnames(rmS) <- c("x1", "x2", "x3")
+set.seed(2019)
+render(rmS, grand_tour(), display_slice(), 'png', "gifs/png/roman-surface-centered-%03d.png", frames = max_f, rescale = FALSE)
+
+
+library(animation)
+data(pollen)
+pollen <- as.matrix(pollen) %>% scale()
+set.seed(2019)
+render(pollen, grand_tour(), display_slice( half_range=3, eps=0.0005, axes = "bottomleft"), 'png', "gifs/png/pollen-%03d.png", frames = max_f, rescale = FALSE)
+
+set.seed(201909)
+render(pollen, grand_tour(), display_slice( half_range=1, eps=0.005, axes = "bottomleft"), 'png', "gifs/png/pollen-zoom-%03d.png", frames = max_f, rescale = FALSE)
+
+library(RColorBrewer)
+wine_radial <- read_csv("data/wine-svm-radial.csv")
+wine_poly <- read_csv("data/wine-svm-poly.csv")
+clrs <- brewer.pal(3, "Dark2")
+col <- clrs[as.numeric(as.factor(wine_poly$type))]
+wine_poly_scaled <- scale(as.matrix(wine_poly[,1:5]))
+set.seed(201909)
+render(wine_poly_scaled, grand_tour(), display_slice(axes = "bottomleft", eps=0.15, col=col), 'png', "gifs/png/wine-%03d.png", frames = max_f, rescale = FALSE)
+
+
+
+####### end rendered examples
+
+
 #testing out different anchor in 5d with large sample
 sphere5 <- geozoo::sphere.hollow(5, 50000)$points
 colnames(sphere5) <- c("x1", "x2", "x3", "x4", "x5")
@@ -91,8 +137,8 @@ animate_slice(ex10, eps=0.01)
 # Classical pollen data: this doesn't work, structure is 2D in 5D so mostly missed
 library(animation)
 data(pollen)
-pollen <- as.matrix(pollen)
-animate_slice(pollen, axes = "bottomleft", eps=0.0001, rescale=TRUE)
+pollen <- as.matrix(pollen) %>% scale()
+animate_slice(pollen, axes = "bottomleft", eps=0.0005, half_range=3)
 
 # Could we look at nonlinear boundaries between classifiers
 library(RColorBrewer)

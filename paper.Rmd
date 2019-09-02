@@ -176,8 +176,6 @@ animate_slice(sphere3, anchor = anchor3, eps = 0.005, pch_other=26)
 ```
 
 # Examples
-XXX choose 6
-
 ## Geometric shapes
 ### Hollow sphere
 We sample points on the surface of a sphere with radius $r=1$ in $p=3$ and $p=5$ dimensions. Using the `geozoo` package [@geozoo], we draw 2000 (5000) points that are uniformly distributed on the surface of a 3d (5d) sphere.
@@ -196,8 +194,26 @@ It is especially instructive to look at the sliced spheres with an off-center an
 \end{figure*}
 
 ### Other geometric shapes
+To better understand the slice tour we look at different examples of geometric shapes, see Figure \ref{fig:geoms}. For each shape two selected views are shown. The first column shows views from the slice tour on a 3d Roman surface. The second column shows slices through a 4d torus, revealing different aspects of the shape. The last column shows a 6d cube, where the upper plot shows a view along two of the parameter combinations, allowing to clearly identify the rectangular shape. The panel below shows that this is not typically the case when looking at a randomly selected slice.
 
-Examples: 4d cube, 4d torus
+\begin{figure*}[ht]
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/roman-surface-centered-010.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/torus-4-centered-015.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/cube-6-centered-001.png}}
+\centerline{
+\includegraphics[width=0.2\textwidth]{gifs/png/roman-surface-centered-032.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/torus-4-centered-033.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/cube-6-centered-063.png}
+}
+\caption{Different slices through a Roman surface (left), 4d torus (middle) and a 6d cube (right).}
+\label{fig:geoms}
+\end{figure*}
+
+
 
 ## Other examples
 
