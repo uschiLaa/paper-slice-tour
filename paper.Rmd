@@ -42,18 +42,18 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 # Introduction
 
 <!-- Background -->
-Data is commonly high-dimensional, and visualisation often relies on some form of dimension reduction. This can be taking linear projections, or nonlinear if one considers techniques like multidimensional scaling (MDS) or t-Distributed Stochastic Neighbor Embedding (t-SNE). For the purposes here, the focus is on linear projections, in particular as provided by the grand tour [@As85; @BCAH05]. Interactive and dynamic displays can provide information beyond what can be achieved in a static display. The grand tour shows a smooth sequence of interpolated low dimensional projections, and allows the viewer to extrapolate from the low-dimensional shapes to the multidimensional distribution. It is particularly useful for detecting clusters, outliers and non-linear dependence. 
+Data is commonly high-dimensional, and visualisation often relies on some form of dimension reduction. This can be by taking linear projections, or nonlinear, if one considers techniques like multidimensional scaling (MDS) or t-Distributed Stochastic Neighbor Embedding (t-SNE). For the purposes here, the focus is on linear projections, in particular as provided by the grand tour [@As85; @BCAH05]. Interactive and dynamic displays can provide information beyond what can be achieved in a static display. The grand tour shows a smooth sequence of interpolated low dimensional projections, and allows the viewer to extrapolate from the low-dimensional shapes to the multidimensional distribution. It is particularly useful for detecting clusters, outliers and non-linear dependence. 
 
 <!-- The disadvantage of projection: opacity, occlusion, even with pseudo-transparency from scatterplots;  motivation -->
-A major limitation of projections is their opacity. It is mitigated some, when scatterplots are used to render the projected data, through a pseudo-transparancy of sparseness of points. This is improved further if points are also drawn using some transparency. Some features of multivariate distributions may be visible, but a lot is easily hidden, especially in the case of concave structures. Considering the example of a simple geometric shape such as a hypershere, it is difficult to distinguish between a full or a hollow sphere, that is, whether points are uniformly distributed within the sphere or on the surface of a sphere. Similarly we can think of small scale structures hidden in the center of a multivariate distribution, that might be considered to be "needles in a haystack", which can be difficult to detect in projections. Another example is where one would like to examine non-linear boundaries between groups from a classification model, with the nature of the boundaries being occluded in the projections.
+A major limitation of projections is their opacity. It is mitigated some, when scatterplots are used to render the projected data, through a pseudo-transparency of sparseness of points. This is improved further if points are also drawn using an alpha level that provides transparent dots on most display devices. Some features of multivariate distributions may be visible, but a lot is easily hidden, especially in the case of concave structures. Considering the example of a simple geometric shape such as a hypershere, it is difficult to distinguish between a full or a hollow sphere, that is, whether points are uniformly distributed within the sphere or on the surface of a sphere. Similarly we can think of small scale structures hidden in the center of a multivariate distribution, that might be considered to be "needles in a haystack", which can be difficult to detect in projections. Projections also obscure non-linear boundaries as might be constructed from a classification model, or nonlinear model fits in high-dimensions. 
 
 <!-- Our approach: introduce sections; many different ways to slice, refer to linked brushing as slicing whcih mirrors prosection, but here we will explain/utilise a simple slicing on the projection where point in orthogonal space are faded. -->
-Slicing, or sectioning, is a way that the internal distribution of high-dimensional data can be explored. @prosection discusses a technique for combining projections and sections, by slicing in the back-dimensions. It is also possible to think of linked brushing (e.g. @ggobiCSDA2003, @JSSv081i05) as slicing. In this note we discuss another approach to sectioning, where observations in the space orthogonal to the projection are highlighted if they are close to the projection plane, and faded if further afield. This is combined with the grand tour to provide a new dynamic display that can be used to systematically search for features hidden in high dimensions.
+Slicing, or sectioning, is a way that the internal distribution of high-dimensional data can be explored. @prosection discusses a technique for combining projections, with sections constructed by slicing in the dimensions orthogonal to the projection. It is also possible to think of linked brushing (e.g. @ggobiCSDA2003, @JSSv081i05) as slicing. In this note, we discuss an approach to sectioning, where observations in the space orthogonal to the projection are highlighted if they are close to a projection plane through the mean of the data, and faded if further afield. This is combined with the grand tour to provide a new dynamic display that can be used to systematically search for features hidden in high dimensions.
 
 <!-- paper structure --> 
-The method is described in Section XXX, and it is implemented in the `tourr` [@tourr] package in R [@rref].  Section XXX illustrates the use on several high-dimensional geometric shapes and established data sets, showing how concave or occluded structures can be visualised and explored with a slice tour. Future work is discussed in Section XXX.
+The new section tour method is described in Section \ref{sec:method}, and it is implemented in the `tourr` [@tourr] package in R [@rref] (Section \ref{sec:implementation}).  Section \ref{sec:examples} illustrates the use on several high-dimensional geometric shapes and established data sets, showing how concave or occluded structures can be visualised and explored with a slice tour. Future work is discussed in Section \ref{sec:discussion}.
 
-# Method
+# Method {#sec:method}
 
 The basis underlying our approach is the grand tour. We first briefly review the relevant concepts. Building on these ideas we then introduce a method for displaying slices of parameter space that are defined for each projection matrix.
 
@@ -149,7 +149,7 @@ x_i'\cdot\alpha' = x_i\cdot\alpha - (\alpha\cdot a_1) (x_i\cdot a_1) - (\alpha\c
 
 Using the generalized distance measure with a cutoff volume $\epsilon$ then corresponds to moving a slice of fixed thickness to be centered around the anchor point $\alpha$ in the space orthogonal to the current projection plane. In three dimensions this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-center anchor point will generally result in fewer points inside most slices.
 
-# Implementation
+# Implementation {#sec:implementation}
 
 The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the anchor point $\alpha$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the mean In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3d sphere.
 
@@ -166,7 +166,7 @@ anchor3 <- rep(0.7, 3)
 animate_slice(sphere3, anchor = anchor3, eps = 0.2, pch_other=26)
 ```
 
-# Examples
+# Examples {#sec:examples}
 ## Geometric shapes
 ### Hollow sphere
 We sample points on the surface of a sphere with radius $r=1$ in $p=3$ and $p=5$ dimensions. Using the `geozoo` package [@geozoo], we draw 2000 (5000) points that are uniformly distributed on the surface of a 3d (5d) sphere.
@@ -243,7 +243,7 @@ Selected views from a slice tour of the scaled and centered data, and with large
 \end{figure*}
 
 
-# Summary and Outlook
+# Discussion {#sec:discussion}
 
 In this note we introduce a new visualization method for dynamic slicing of high-dimensional parameter spaces. It is based on interpolated projections obtained in a grand tour and generates an interpolated sequence of projected sections. The examples shown in Section XXX demonstrate the potential of this new display to find and explore concave structures, as well as other hidden features.
 
