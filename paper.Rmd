@@ -55,34 +55,32 @@ The new section tour method is described in Section \ref{sec:method}, and it is 
 
 # Method {#sec:method}
 
-The sectioning is combined with the projections provided by a grand tour. A brief explanation of the tour is provided followed by an explanation of how slicing is done.
-
 ## Tour review
 
 A tour provides a continuous sequence of $d$-dimensional (typically $d=1$ or $2$) projections from $p$-dimensional Euclidean space. It is constructed by combining a method for basis selection with geodesic interpolation between pairs of bases. In a grand tour, the basis selection is random, each new basis is chosen from all possible projections. In a guided tour, the bases are chosen based on an index of interestingness. Different basis selection methods as well as the geodesic interpolation are implemented in the `tourr` package [@tourr], which also provides several display functions for viewing the tour.
 
-For the explanation of the slice tour, the actual mechanics of the tour are not important, and only the notion of a projection plane in high dimensions is needed. The notation used for explanations starts with deoting each projection as $\mathbf{X}$ the $n\times p$ dimensional data matrix ($n$ observations in $p$ dimensions) and $\mathbf{A}$ an orthonormal $p \times d$ projection matrix. The $d$-dimensional projection of the data is thus given by $\mathbf{Y} = \mathbf{X}\cdot\mathbf{A}$, giving the $n\times d$ dimensional projected data matrix to be plotted in each frame of the tour display.
+For the explanation of the slice tour, the actual mechanics of the tour are not important, and only the notion of a projection plane in high dimensions is needed. The notation used for explanations starts with deoting each projection as $\mathbf{X}$ the $n\times p$ dimensional data matrix ($n$ observations in $p$ dimensions) and $\mathbf{A}$ an orthonormal $p \times d$ projection matrix. The $d$-dimensional projection of the data is thus given by $\mathbf{Y} = \mathbf{X}\cdot\mathbf{A}$, producing the $n\times d$ dimensional projected data matrix to be plotted in each frame of the tour display.
 
-In the following we are interested in the orthogonal distance of scatter points from an anchored projection plane, thus $d=2$. 
+To make a section, we are interested in the orthogonal distance of the data points from an anchored projection plane, particularly using $d=2$, but the approach theoretically works for any $d$. 
 
 ## Slicing in the orthogonal space
 
 ### Distance from the origin
 
-In addition to the projected data $\mathbf{Y}$ we calculate for each projection the orthogonal distance of the data points from the current projection plane centered at the origin. The orthogonal component is given by
+In addition to the projected data $\mathbf{Y}$, for each projection the orthogonal distance of the data points from the current projection plane centered at the data mean, is calculated. The orthogonal component is given by
 \begin{equation}
-x_i' = x_i - (x_i\cdot a_1) a_1 - (x_i\cdot a_2) a_2
+\mathbf{x}_i' = \mathbf{x}_i - (\mathbf{x}_i\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{x}_i\cdot \mathbf{a}_2) \mathbf{a}_2
 \end{equation}
-with $x_i, i=1,...,n$ a $p$-dimensional observation in $\mathbf{X}$ and $a_i, i=1,2$ denoting the columns of the projection matrix, $\mathbf{A}=(a_1, a_2)$.
-Calculating the euclidean norm of $x'$ is straightforward thanks to the orthonormality of $\mathbf{A}$, and gives the components of the required distance vector.
+with $\mathbf{x}_i, i=1,...,n$ a $p$-dimensional observation in $\mathbf{X}$ and $\mathbf{a}_i, i=1,2$ denoting the columns of the projection matrix, $\mathbf{A}=(\mathbf{a}_1, \mathbf{a}_2)$.
+Calculating the euclidean norm of $\mathbf{x}'$ is straightforward thanks to the orthonormality of $\mathbf{A}$, and gives the components of the required distance vector.
 \begin{equation}
-\tilde{v}_i^2 = ||x_i'||^2 = x_i^2 - (x_i\cdot a_1)^2 - (x_i\cdot a_2)^2.
+\tilde{v}_i^2 = ||\mathbf{x}_i'||^2.
 \end{equation}
-We also see that this is trivially generalizing for orthonormal projection matrices with $d>2$.
+This can be generalized for $d>2$.
 
-The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. Notice that in 3d, where for each plane we have a single orthogonal direction, this defines a flat slice of hight $2h$, matching the common conception of a slice. When going beyond 3d, the dimension of the orthogonal space is $>1$. Using the euclidean distance results in rotation invariant slicing in the orthogonal space, where a "slice" is spherical in the orthogonal subspace, and has radius $h$.
+The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In 3D, where for each plane there is only a single orthogonal direction, this defines a flat slice of height $2h$, matching the common conception of a slice. When going beyond 3D, the dimension of the orthogonal space is $>1$. Using the euclidean distance results in rotation invariant slicing in the orthogonal space, where a "slice" is spherical in the orthogonal subspace, and has radius $h$.
 
-Figure \ref{fig:renderFunction} shows slices through 4d geometric shapes, illustrating how we can distinguish the full from the hollow shapes.
+Figure \ref{fig:renderFunction} shows slices through 4D solid and hollow geometric shapes, illustrating the ease of distinguish the solid from the hollow shapes once slices are shown. For each shape, the points are generated either uniformly within the shape, or on the surface. 
 
 ```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Projected slices through 4d geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display.\\label{fig:renderFunction}"}
 library(tidyverse)
