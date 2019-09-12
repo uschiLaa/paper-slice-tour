@@ -9,6 +9,9 @@ author:
   - name: Dianne Cook
     affil: b
     email: dicook@monash.edu
+  - name: German Valencia
+    affil: a
+    email: german.valencia@monash.edu
 affiliation:
   - num: a
     address: |
