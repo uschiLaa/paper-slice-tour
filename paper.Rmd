@@ -24,7 +24,7 @@ geometry: margin=2.5cm
 abstract: |
   Taking projections of high-dimensional data is a common analytical and visualisation technique in statistics for working with high-dimensional problems. Sectioning, or slicing, through high dimensions is less common, but can be useful for visualising data with concavities, or non-linear structure. It is associated with conditional distributions in statistics, and also linked brushing between plots in interactive data visualisation. This short technical note describes a simple approach for  slicing in the orthogonal
   space of projections obtained when running a tour, thus presenting the viewer
-  with an interpolated sequence of projected sections. The method has been
+  with an interpolated sequence of sliced projections. The method has been
   implemented in R as an extension to the tourr package, and can be used to
   explore for concave and non-linear structures in multivariate distributions.
 keywords: |
@@ -89,7 +89,7 @@ The distance vector can then be used to display a slice tour by highlighting poi
 
 Figure \ref{fig:renderFunction} shows slices through 4D solid and hollow geometric shapes. For each shape, the points are generated either uniformly within the shape, or on the surface. This illustrates the ease of distinguishing the solid from the hollow, once slices are made.  
 
-```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Projected slices through 4d geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display.\\label{fig:renderFunction}"}
+```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Sliced projections through 4D geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display.\\label{fig:renderFunction}"}
 library(tidyverse)
 
 # slight modification of the function in tourr::display_slice
@@ -157,11 +157,11 @@ Using the generalized distance measure with a cutoff volume, $\epsilon$, then co
 
 # Implementation {#sec:implementation}
 
-The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the anchor point $\alpha$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the mean In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3d sphere.
+The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the anchor point $\alpha$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the mean In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3D sphere.
 
 ```{r codeExampel, echo=TRUE, eval=FALSE}
 library(tourr)
-# use geozoo to generate points on a hollow 3d sphere
+# use geozoo to generate points on a hollow 3D sphere
 sphere3 <- geozoo::sphere.hollow(3)$points
 colnames(sphere3) <- c("x1", "x2", "x3") # naming variables
 # slice tour animation with default settings
@@ -174,11 +174,13 @@ animate_slice(sphere3, anchor = anchor3, eps = 0.2, pch_other=26)
 
 # Examples {#sec:examples}
 ## Geometric shapes
-### Hollow sphere
-We sample points on the surface of a sphere with radius $r=1$ in $p=3$ and $p=5$ dimensions. Using the `geozoo` package [@geozoo], we draw 2000 (5000) points that are uniformly distributed on the surface of a 3d (5d) sphere.
-For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.1$, i.e. $h = 0.1$ in 3d and $h = 0.46$ in 5d. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure~\ref{fig:renderFunction}. Animated gifs of these examples are available at XXX.
 
-It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3d sphere with $r=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $r$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<r$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5d sphere. Note however that as dimensionality increases, the larger orthogonal space means that the anchor point will have a large orthogonal component in most views.
+Using the `geozoo` package [@geozoo] a number of ideal shapes are generated. 
+
+### Hollow sphere
+We sample points on the surface of a sphere with radius $r=1$ in $p=3$ and $p=5$ dimensions. Using the `sphere.hollow()` function, we generate two sample data sets by generating 2000 and 5000 points from a uniform distribution on the surface of a 3D and 5D spheres. For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.1$, i.e. $h = 0.1$ in 3D and $h = 0.46$ in 5D. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure~\ref{fig:renderFunction}. Animated gifs of these examples are available at XXX.
+
+It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3D sphere with $r=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $r$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<r$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5D sphere. Note however that as dimensionality increases, the larger orthogonal space means that the anchor point will have a large orthogonal component in most views.
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-033.png}
@@ -186,12 +188,12 @@ It is especially instructive to look at the sliced spheres with an off-center an
 \includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-036.png}
 \hspace{5mm}
 \includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-041.png}}
-\caption{Different slices through a 3d hollow sphere with $r=1$, with anchor point $(0.7, 0.7, 0.7)$, showing full circle with small radius (left), circle with radius $<r$ (middle) and circle with radius $r$ (right).}
+\caption{Different slices through a 3D hollow sphere with $r=1$, with anchor point $(0.7, 0.7, 0.7)$, showing full circle with small radius (left), circle with radius $<r$ (middle) and circle with radius $r$ (right).}
 \label{fig:3anchored}
 \end{figure*}
 
 ### Other geometric shapes
-To better understand the slice tour we look at different examples of geometric shapes, see Figure \ref{fig:geoms}. For each shape two selected views are shown. The first column shows views from the slice tour on a 3d Roman surface. The second column shows slices through a 4d torus, revealing different aspects of the shape. The last column shows a 6d cube, where the upper plot shows a view along two of the original parameters, allowing to clearly identify the rectangular shape. The panel below shows that this is not typically the case when looking at a randomly selected slice.
+To better understand the slice tour we look at different examples of geometric shapes, see Figure \ref{fig:geoms}. For each shape two selected views are shown. The first column shows views from the slice tour on a 3D Roman surface. The second column shows slices through a 4D torus, revealing different aspects of the shape. The last column shows a 6d cube, where the upper plot shows a view along two of the original parameters, allowing to clearly identify the rectangular shape. The panel below shows that this is not typically the case when looking at a randomly selected slice.
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/roman-surface-centered-010.png}
@@ -206,7 +208,7 @@ To better understand the slice tour we look at different examples of geometric s
 \hspace{5mm}
 \includegraphics[width=0.2\textwidth]{gifs/png/cube-6-centered-063.png}
 }
-\caption{Different slices through a Roman surface (left), 4d torus (middle) and a 6d cube (right).}
+\caption{Different slices through a Roman surface (left), 4D torus (middle) and a 6d cube (right).}
 \label{fig:geoms}
 \end{figure*}
 
@@ -215,7 +217,7 @@ To better understand the slice tour we look at different examples of geometric s
 ## Other examples
 
 ### Needle in a haystack
-We use the pollen data as an example for a hidden feature generally occluded in projections. This 5d 1986 Exposition's dataset was made by David Coleman of RCA Labs. [XXX REF] We center and scale each variable of the dataset and run a slice tour with a thin slice ($\epsilon = 0.0005$). Selected views are shown in the first two plots in Figure \ref{fig:pollen}, indicating the presence of an interesting feature hidden in the center. We next zoom in on the center of the distribution and consider a thicker slice ($\epsilon = 0.005$) to uncover the hidden structure, shown in the last two plots of Figure \ref{fig:pollen}.
+We use the pollen data as an example for a hidden feature generally occluded in projections. This 5D 1986 Exposition's dataset was made by David Coleman of RCA Labs. [XXX REF] We center and scale each variable of the dataset and run a slice tour with a thin slice ($\epsilon = 0.0005$). Selected views are shown in the first two plots in Figure \ref{fig:pollen}, indicating the presence of an interesting feature hidden in the center. We next zoom in on the center of the distribution and consider a thicker slice ($\epsilon = 0.005$) to uncover the hidden structure, shown in the last two plots of Figure \ref{fig:pollen}.
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/pollen-007.png}
@@ -235,6 +237,8 @@ XXX say something about this dataset [@sam.11271]
 
 Selected views from a slice tour of the scaled and centered data, and with large slice volume $\epsilon = 0.15$ are shown in Figure \ref{fig:wine}. The slices allow to clearly see the non-linearity of the boundary between the green and orange group. The first view also shows a non-linear boundary of the purple group. Interestingly this group does not appear at all in the second slice shown here.
 
+XXX Show projection for each of these as well as slice.
+
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/wine-029.png}
 \hspace{5mm}
@@ -251,7 +255,7 @@ Selected views from a slice tour of the scaled and centered data, and with large
 
 # Discussion {#sec:discussion}
 
-In this note we introduce a new visualization method for dynamic slicing of high-dimensional parameter spaces. It is based on interpolated projections obtained in a grand tour and generates an interpolated sequence of projected sections. The examples shown in Section XXX demonstrate the potential of this new display to find and explore concave structures, as well as other hidden features.
+In this note we introduce a new visualization method for dynamic slicing of high-dimensional parameter spaces. It is based on interpolated projections obtained in a grand tour and generates an interpolated sequence of sliced projections. The examples shown in Section XXX demonstrate the potential of this new display to find and explore concave structures, as well as other hidden features.
 
 In applications with large number of dimensions and where only a few samples are available the method is limited. In this case thick slices may be needed to get a sufficient number of observations inside the slice, and as a result  small scale structures cannot be resolved in the slice tour. If on the other hand a large number of samples are available one may consider displaying only points inside the slice to keep a clear display.
 
