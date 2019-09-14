@@ -134,25 +134,23 @@ The fraction of points inside a slice of thickness $h$ can be estimated as the r
 \begin{equation}
 V_{rel} = \frac{1}{2} \frac{h^{p-2}}{r^p} (p r^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
 \end{equation}
-where $r$ is XXX, and $R$ is XXX. The approximation is valid when $h \ll r$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $epsilon$ is XXX.
+where $r$ is XXX, and $R$ is XXX. The approximation is valid when $h \ll r$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
 
 
 ### Anchoring
 
-The above definition implicitly assumes that we slice the distribution using the origin as a reference point. This is generally a good starting point assuming the data is centered before applying the slice tour. Alternative reference points can however provide additional insight into the concave structure of the distribution. We can also use the mean in each parameter as an anchor point if the data is not centered.
+The equations above assume that the projection plane, and thus the the slice, passes through 0, which will be the mean of centered data. This (anchor point) is generally a good option for the slice tour, because as the tour progresses the projection plane changes and can catch non-central concavities, too. However it is straightforward generalize the equations to use any anchor point, $\alpha$.
 
-We therefore generalize the distance vector to measure the anchored orthogonal distance, i.e. distance with respect to the anchor $\alpha$ used as a reference point.
-
-In general $\alpha$ can be any point in the $n$-dimensional parameter space, but we are only interested in the orthogonal component, thus we use $\alpha' = \alpha - (\alpha\cdot a_1) a_1 - (\alpha\cdot a_2 )a_2$ to define the generalized measure of orthogonal distance as
+In general $\alpha$ can be any point in the $n$-dimensional parameter space, but we are only interested in the orthogonal component, the part of the vector extedning out of the projection plane, $\mathbf{\alpha}' = \mathbf{\alpha} - (\mathbf{\alpha}\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{\alpha}\cdot \mathbf{a}_2 )\mathbf{a}_2$. The generalized measure of orthogonal distance is then
 \begin{equation}
-v_i^2 = ||x_i' - \alpha'||^2 = x_i'^2 + \alpha'^2 - 2 x_i'\cdot\alpha'
+v_i^2 = ||\mathbf{x}_i' - \mathbf{\alpha}'||^2 = \mathbf{x}_i'^2 + \mathbf{\alpha}'^2 - 2 \mathbf{x}_i'\cdot\mathbf{\alpha}'
 \end{equation}
 where the cross term can be expressed as
 \begin{equation}
-x_i'\cdot\alpha' = x_i\cdot\alpha - (\alpha\cdot a_1) (x_i\cdot a_1) - (\alpha\cdot a_2) (x_i\cdot a_2).
+\mathbf{x}_i'\cdot\mathbf{\alpha}' = \mathbf{x}_i\cdot\mathbf{\alpha} - (\mathbf{\alpha}\cdot \mathbf{a}_1) (\mathbf{x}_i\cdot \mathbf{a}_1) - (\mathbf{\alpha}\cdot \mathbf{a}_2) (\mathbf{x}_i\cdot \mathbf{a}_2).
 \end{equation}
 
-Using the generalized distance measure with a cutoff volume $\epsilon$ then corresponds to moving a slice of fixed thickness to be centered around the anchor point $\alpha$ in the space orthogonal to the current projection plane. In three dimensions this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-center anchor point will generally result in fewer points inside most slices.
+Using the generalized distance measure with a cutoff volume, $\epsilon$, then corresponds to moving a slice of fixed thickness, corresponding to a neighborhood of the projection plane through the anchor point $\mathbf{\alpha}$. In 3D, this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-center anchor point may result in fewer points inside a slice for most data.
 
 # Implementation {#sec:implementation}
 
