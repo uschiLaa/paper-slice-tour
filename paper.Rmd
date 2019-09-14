@@ -136,6 +136,7 @@ V_{rel} = \frac{1}{2} \frac{h^{p-2}}{r^p} (p r^2 - (p-2) h^2) \approx \frac{1}{2
 \end{equation}
 where $r$ is XXX, and $R$ is XXX. The approximation is valid when $h \ll r$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
 
+*XXX Do we need a diagram?*
 
 ### Anchoring
 
@@ -151,6 +152,8 @@ where the cross term can be expressed as
 \end{equation}
 
 Using the generalized distance measure with a cutoff volume, $\epsilon$, then corresponds to moving a slice of fixed thickness, corresponding to a neighborhood of the projection plane through the anchor point $\mathbf{\alpha}$. In 3D, this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-center anchor point may result in fewer points inside a slice for most data.
+
+*XXX Do we need a diagram?*
 
 # Implementation {#sec:implementation}
 
