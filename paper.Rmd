@@ -82,7 +82,7 @@ The orthogonal distance of the data points from the current projection plane cen
 \mathbf{x}_i' = \mathbf{x}_i - (\mathbf{x}_i\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{x}_i\cdot \mathbf{a}_2) \mathbf{a}_2
 \end{equation}
 
-\noindent and $\mathbf{x}_i, i=1,...,n$ a $p$-dimensional observation in $\mathbf{X}$ and $\mathbf{a}_i, i=1,2$ denoting the columns of the projection matrix, $\mathbf{A}=(\mathbf{a}_1, \mathbf{a}_2)$.
+\noindent and $\mathbf{x}_i, i=1,...,n$ is a $p$-dimensional observation in $\mathbf{X}$ and $\mathbf{a}_i, i=1,2$ denoting the columns of the projection matrix, $\mathbf{A}=(\mathbf{a}_1, \mathbf{a}_2)$.
 Calculating the euclidean norm of $\mathbf{x}'$ is straightforward thanks to the orthonormality of $\mathbf{A}$, and gives the components of the required distance vector. This can be generalized for $d>2$.
 
 The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In 3D, where for each plane there is only a single orthogonal direction, this defines a flat slice of height $2h$. We could use this single direction to slice systematically from one side of the space to the other. It is also possible to think of front and back, some points are closer to the viewer, and some are far, and depth cues could be used. When going beyond 3D, the dimension of the orthogonal space is $>1$, and all sense of direction is lost. In general, there are $(p-d)$ dimensions orthogonal to the projection plane, so using distance from the points to the plane is the simplest approach to generating slices. Using the euclidean distance results in rotation invariant slicing in the orthogonal space, where a "slice" is spherical in the orthogonal subspace, and has radius $h$.
@@ -128,13 +128,13 @@ grid.arrange(a, b, c, d, nrow=1)
 
 ### Slice thickness
 
-Choosing the slice thickness is a compromise between what feature size can be resolved and how many points fall inside a thin slice. As dimensionality $p$ increases, the relative number of points that are inside a slice of fixed thickness $h$ will decrease. The exact relation depends on the distribution of the data points. Here we estimate how it scales with $h$ and $p$ for the example of points uniformly distributed in a hypersphere. The example was selected since it represents a rotation invariant uniform distribution in $p$ space. As we are interested in hollowness this type of distribution is more relevant than a multivariate normal distribution.
+Choosing the slice thickness is a compromise between what feature size can be resolved and the sparseness of the data. As $p$ increases, the relative number of points that are inside a slice of fixed thickness $h$ will decrease. The exact relation depends on the distribution of the data points. To get a best estimate for $h$, given $p$, assume that the points are uniformly distributed in a hypersphere. This is a rotation invariant uniform distribution in $p$ space, and because with sllicing we are mostly interested in hollowness this is more relevant than assuming a multivariate normal distribution.
 
 The fraction of points inside a slice of thickness $h$ can be estimated as the relative volume of the slice compared to the volume of the full hypersphere,
 \begin{equation}
 V_{rel} = \frac{1}{2} \frac{h^{p-2}}{r^p} (p r^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
 \end{equation}
-where the approximation is valid when $h \ll r$, as is typically expected to be the case. Thus if we want to keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$.
+where $r$ is XXX, and $R$ is XXX. The approximation is valid when $h \ll r$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $epsilon$ is XXX.
 
 
 ### Anchoring
