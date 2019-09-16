@@ -1,0 +1,70 @@
+---
+title: "Appendix"
+type: Short Technical Note
+author:
+  - name: Ursula Laa
+    affil: a, b
+    email: ursula.laa@monash.edu
+  - name: Dianne Cook
+    affil: b
+    email: dicook@monash.edu
+  - name: German Valencia
+    affil: a
+    email: german.valencia@monash.edu
+affiliation:
+  - num: a
+    address: |
+      School of Physics and Astronomy, Monash University
+  - num: b
+    address: |
+      Department of Econometrics and Business Statistics, Monash University
+bibliography: biblio.bib
+geometry: margin=2.5cm
+abstract: |
+  Taking projections of high-dimensional data is a common analytical and visualisation technique in statistics for working with high-dimensional problems. Sectioning, or slicing, through high dimensions is less common, but can be useful for visualising data with concavities, or non-linear structure. It is associated with conditional distributions in statistics, and also linked brushing between plots in interactive data visualisation. This short technical note describes a simple approach for  slicing in the orthogonal
+  space of projections obtained when running a tour, thus presenting the viewer
+  with an interpolated sequence of sliced projections. The method has been
+  implemented in R as an extension to the tourr package, and can be used to
+  explore for concave and non-linear structures in multivariate distributions.
+keywords: |
+  data visualisation; grand tour; sectioning
+header-includes: |
+  \usepackage{hyperref}
+  \usepackage[utf8]{inputenc}
+  \def\tightlist{}
+  \usepackage{setspace}
+output: rticles::tf_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+\doublespacing
+# Slice volume derivation
+
+We calculate the relative volume of a slice through a $p$ dimensional hypersphere. The volume of a full hypersphere with radius $r$ is
+
+\begin{equation}
+V(r, p) = \frac{\pi^{p/2} r^p}{\frac{p}{2} \Gamma(p/2)}.
+\end{equation}
+
+It is parametrised by its radius $r$ and its variation with the radius is given as
+
+\begin{equation}
+\frac{dV(r, p)}{dr} = 2 \frac{\pi^{p/2} r^{p-1}}{\Gamma(p/2)}.
+\end{equation}
+
+Our slice definition is spherical in the $p-2$ dimensional orthogonal space, while capturing the full volume (i.e. area) inside the plane. To calculate the slice volume we therefore integrate $\frac{dV(r, p-2)}{dr}$ multiplied with the area in the plane, from the origin to the slice thickness $h$. Using the parametrisation with the radius $r$, the area in the plane is a circle with radius $\sqrt{R^2 - r^2}$. The slice volume is thus calculated as
+
+\begin{equation}
+V_{slice}(R, h, p) =
+\int_0^h \frac{dV(r, p)}{dr} V(\sqrt{R^2 - r^2}, 2) dr =
+\frac{\pi^{p/2}}{\Gamma(p/2)} \frac{h^{p-2}}{p} [pR^2 - (p-2)h^2].
+\end{equation}
+
+The relative volume of the slice is then simply given as
+
+\begin{equation}
+V_{rel}(R, h, p) = \frac{V_{slice}(R, h, p)}{V(R, p)} = \frac{h^{p-2}}{2R^p} [pR^2 - (p-2)h^2].
+\end{equation}
