@@ -132,32 +132,32 @@ Choosing the slice thickness is a compromise between what feature size can be re
 
 The fraction of points inside a slice of thickness $h$ can be estimated as the relative volume of the slice compared to the volume of the full hypersphere,
 \begin{equation}
-V_{rel} = \frac{1}{2} \frac{h^{p-2}}{r^p} (p r^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
+V_{rel} = \frac{1}{2} \frac{h^{p-2}}{R^p} (p R^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
 \end{equation}
-where $r$ is XXX, and $R$ is XXX. The approximation is valid when $h \ll r$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
+where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
 
 *XXX Do we need a diagram?*
 
 ### Anchoring
 
-The equations above assume that the projection plane, and thus the the slice, passes through 0, which will be the mean of centered data. This (anchor point) is generally a good option for the slice tour, because as the tour progresses the projection plane changes and can catch non-central concavities, too. However it is straightforward generalize the equations to use any anchor point, $\alpha$.
+The equations above assume that the projection plane, and thus the the slice, passes through 0, which will be the mean of centered data. This (center point) is generally a good option for the slice tour, because as the tour progresses the projection plane changes and can catch non-central concavities, too. However it is straightforward generalize the equations to use any center point, $\mathbf{c}$.
 
-In general $\alpha$ can be any point in the $n$-dimensional parameter space, but we are only interested in the orthogonal component, the part of the vector extedning out of the projection plane, $\mathbf{\alpha}' = \mathbf{\alpha} - (\mathbf{\alpha}\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{\alpha}\cdot \mathbf{a}_2 )\mathbf{a}_2$. The generalized measure of orthogonal distance is then
+In general $\mathbf{c}$ can be any point in the $p$-dimensional parameter space, but we are only interested in the orthogonal component, the part of the vector extedning out of the projection plane, $\mathbf{c}' = \mathbf{c} - (\mathbf{c}\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{c}\cdot \mathbf{a}_2 )\mathbf{a}_2$. The generalized measure of orthogonal distance is then
 \begin{equation}
-v_i^2 = ||\mathbf{x}_i' - \mathbf{\alpha}'||^2 = \mathbf{x}_i'^2 + \mathbf{\alpha}'^2 - 2 \mathbf{x}_i'\cdot\mathbf{\alpha}'
+v_i^2 = ||\mathbf{x}_i' - \mathbf{c}'||^2 = \mathbf{x}_i'^2 + \mathbf{c}'^2 - 2 \mathbf{x}_i'\cdot\mathbf{c}'
 \end{equation}
 where the cross term can be expressed as
 \begin{equation}
-\mathbf{x}_i'\cdot\mathbf{\alpha}' = \mathbf{x}_i\cdot\mathbf{\alpha} - (\mathbf{\alpha}\cdot \mathbf{a}_1) (\mathbf{x}_i\cdot \mathbf{a}_1) - (\mathbf{\alpha}\cdot \mathbf{a}_2) (\mathbf{x}_i\cdot \mathbf{a}_2).
+\mathbf{x}_i'\cdot\mathbf{c}' = \mathbf{x}_i\cdot\mathbf{c} - (\mathbf{c}\cdot \mathbf{a}_1) (\mathbf{x}_i\cdot \mathbf{a}_1) - (\mathbf{c}\cdot \mathbf{a}_2) (\mathbf{x}_i\cdot \mathbf{a}_2).
 \end{equation}
 
-Using the generalized distance measure with a cutoff volume, $\epsilon$, then corresponds to moving a slice of fixed thickness, corresponding to a neighborhood of the projection plane through the anchor point $\mathbf{\alpha}$. In 3D, this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-center anchor point may result in fewer points inside a slice for most data.
+Using the generalized distance measure with a cutoff volume, $\epsilon$, then corresponds to moving a slice of fixed thickness, corresponding to a neighborhood of the projection plane through the anchor point $\mathbf{c}$. In 3D, this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-center anchor point may result in fewer points inside a slice for most data.
 
 *XXX Do we need a diagram?*
 
 # Implementation {#sec:implementation}
 
-The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the anchor point $\alpha$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the mean In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3D sphere.
+The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the center point $\mathbf{c}$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the mean In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3D sphere.
 
 ```{r codeExampel, echo=TRUE, eval=FALSE}
 library(tourr)
@@ -178,9 +178,9 @@ animate_slice(sphere3, anchor = anchor3, eps = 0.2, pch_other=26)
 Using the `geozoo` package [@geozoo] a number of ideal shapes are generated. 
 
 ### Hollow sphere
-We sample points on the surface of a sphere with radius $r=1$ in $p=3$ and $p=5$ dimensions. Using the `sphere.hollow()` function, we generate two sample data sets by generating 2000 and 5000 points from a uniform distribution on the surface of a 3D and 5D spheres. For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.1$, i.e. $h = 0.1$ in 3D and $h = 0.46$ in 5D. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure~\ref{fig:renderFunction}. Animated gifs of these examples are available at XXX.
+We sample points on the surface of a sphere with radius $R=1$ in $p=3$ and $p=5$ dimensions. Using the `sphere.hollow()` function, we generate two sample data sets by generating 2000 and 5000 points from a uniform distribution on the surface of a 3D and 5D spheres. For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.1$, i.e. $h = 0.1$ in 3D and $h = 0.46$ in 5D. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure \ref{fig:renderFunction}. Animated gifs of these examples are available at XXX.
 
-It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3D sphere with $r=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $r$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<r$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5D sphere. Note however that as dimensionality increases, the larger orthogonal space means that the anchor point will have a large orthogonal component in most views.
+It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3D sphere with $R=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $R$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<R$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5D sphere. Note however that as dimensionality increases, the larger orthogonal space means that the anchor point will have a large orthogonal component in most views.
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-033.png}
@@ -188,7 +188,7 @@ It is especially instructive to look at the sliced spheres with an off-center an
 \includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-036.png}
 \hspace{5mm}
 \includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-041.png}}
-\caption{Different slices through a 3D hollow sphere with $r=1$, with anchor point $(0.7, 0.7, 0.7)$, showing full circle with small radius (left), circle with radius $<r$ (middle) and circle with radius $r$ (right).}
+\caption{Different slices through a 3D hollow sphere with $R=1$, with anchor point $(0.7, 0.7, 0.7)$, showing full circle with small radius (left), circle with radius $<R$ (middle) and circle with radius $R$ (right).}
 \label{fig:3anchored}
 \end{figure*}
 
