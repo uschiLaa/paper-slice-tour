@@ -45,7 +45,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 # Introduction
 
 <!-- Background -->
-Data is commonly high-dimensional, and visualisation often relies on some form of dimension reduction. This can be done by taking linear projections, or nonlinear if one considers techniques like multidimensional scaling (MDS) (XXXREF) or t-Distributed Stochastic Neighbor Embedding (t-SNE) (XXXREF). For the purposes here, the focus is on linear projections, in particular as provided by the grand tour [@As85; @BCAH05]. Interactive and dynamic displays can provide information beyond what can be achieved in a static display. The grand tour shows a smooth sequence of interpolated low dimensional projections, and allows the viewer to extrapolate from the low-dimensional shapes to the multidimensional distribution. It is particularly useful for detecting clusters, outliers and non-linear dependence. 
+Data is commonly high-dimensional, and visualisation often relies on some form of dimension reduction. This can be done by taking linear projections, or nonlinear if one considers techniques like multidimensional scaling (MDS) [@mds] or t-Distributed Stochastic Neighbor Embedding (t-SNE) [@tsne]. For the purposes here, the focus is on linear projections, in particular as provided by the grand tour [@As85; @BCAH05]. Interactive and dynamic displays can provide information beyond what can be achieved in a static display. The grand tour shows a smooth sequence of interpolated low dimensional projections, and allows the viewer to extrapolate from the low-dimensional shapes to the multidimensional distribution. It is particularly useful for detecting clusters, outliers and non-linear dependence. 
 
 <!-- The disadvantage of projection: opacity, occlusion, even with pseudo-transparency from scatterplots;  motivation -->
 A major limitation of projections is their opacity. It is mitigated some, when scatterplots are used to render the projected data, through a pseudo-transparency of sparseness of points. This is improved further if points are also drawn using an alpha level that provides transparent dots on most display devices. Some features of multivariate distributions may be visible, but a lot is easily hidden, especially in the case of concave structures. Considering the example of a simple geometric shape such as a hypershere, it is difficult to distinguish between a full or a hollow sphere, that is, whether points are uniformly distributed within the sphere or on the surface of a sphere. Similarly we can think of small scale structures hidden in the center of a multivariate distribution, that might be considered to be "needles in a haystack", which can be difficult to detect in projections. Projections also obscure non-linear boundaries as might be constructed from a classification model, or nonlinear model fits in high-dimensions. 
@@ -87,7 +87,34 @@ Calculating the euclidean norm of $\mathbf{x}'$ is straightforward thanks to the
 
 The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In 3D, where for each plane there is only a single orthogonal direction, this defines a flat slice of height $2h$. We could use this single direction to slice systematically from one side of the space to the other. It is also possible to think of front and back, some points are closer to the viewer, and some are far, and depth cues could be used. When going beyond 3D, the dimension of the orthogonal space is $>1$, and all sense of direction is lost. In general, there are $(p-d)$ dimensions orthogonal to the projection plane, so using distance from the points to the plane is the simplest approach to generating slices. Using the euclidean distance results in rotation invariant slicing in the orthogonal space, where a "slice" is spherical in the orthogonal subspace, and has radius $h$.
 
-Figure \ref{fig:renderFunction} shows slices through 4D solid and hollow geometric shapes. For each shape, the points are generated either uniformly within the shape, or on the surface. This illustrates the ease of distinguishing the solid from the hollow, once slices are made.  
+Figure \ref{fig:renderFunction} shows slices through 4D solid and hollow geometric shapes. For each shape, the points are generated either uniformly within the shape, or on the surface. This illustrates the ease of distinguishing the solid from the hollow, once slices are made. Figure \ref{fig:diagrams} illustrates the slicing method for 3D and higher dimensions.
+
+
+
+### Slice thickness
+
+Choosing the slice thickness is a compromise between what feature size can be resolved and the sparseness of the data. As $p$ increases, the relative number of points that are inside a slice of fixed thickness $h$ will decrease. The exact relation depends on the distribution of the data points. To get a best estimate for $h$, given $p$, assume that the points are uniformly distributed in a hypersphere. This is a rotation invariant uniform distribution in $p$ space, and because with sllicing we are mostly interested in hollowness this is more relevant than assuming a multivariate normal distribution.
+
+The fraction of points inside a slice of thickness $h$ can be estimated as the relative volume of the slice compared to the volume of the full hypersphere,
+\begin{equation}
+V_{rel} = \frac{1}{2} \frac{h^{p-2}}{R^p} (p R^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
+\end{equation}
+where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $\epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
+
+### Non-central slice
+
+The equations above assume that the projection plane, and thus the the slice, passes through 0, which will be the mean of centered data. This (center point) is generally a good option for the slice tour, because as the tour progresses the projection plane changes and can catch non-central concavities, too. However it is straightforward generalize the equations to use any center point, $\mathbf{c}$.
+
+In general $\mathbf{c}$ can be any point in the $p$-dimensional parameter space, but we are only interested in the orthogonal component, the part of the vector extedning out of the projection plane, $\mathbf{c}' = \mathbf{c} - (\mathbf{c}\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{c}\cdot \mathbf{a}_2 )\mathbf{a}_2$. The generalized measure of orthogonal distance is then
+\begin{equation}
+v_i^2 = ||\mathbf{x}_i' - \mathbf{c}'||^2 = \mathbf{x}_i'^2 + \mathbf{c}'^2 - 2 \mathbf{x}_i'\cdot\mathbf{c}'
+\end{equation}
+where the cross term can be expressed as
+\begin{equation}
+\mathbf{x}_i'\cdot\mathbf{c}' = \mathbf{x}_i\cdot\mathbf{c} - (\mathbf{c}\cdot \mathbf{a}_1) (\mathbf{x}_i\cdot \mathbf{a}_1) - (\mathbf{c}\cdot \mathbf{a}_2) (\mathbf{x}_i\cdot \mathbf{a}_2).
+\end{equation}
+
+Using the generalized distance measure with a cutoff volume, $\epsilon$, then corresponds to moving a slice of fixed thickness, corresponding to a neighborhood of the projection plane through the anchor point $\mathbf{c}$. In 3D, this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-center anchor point may result in fewer points inside a slice for most data.
 
 ```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Sliced projections through 4D geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display.\\label{fig:renderFunction}"}
 library(tidyverse)
@@ -125,17 +152,6 @@ grid.arrange(a, b, c, d, nrow=1)
 
 ```
 
-
-### Slice thickness
-
-Choosing the slice thickness is a compromise between what feature size can be resolved and the sparseness of the data. As $p$ increases, the relative number of points that are inside a slice of fixed thickness $h$ will decrease. The exact relation depends on the distribution of the data points. To get a best estimate for $h$, given $p$, assume that the points are uniformly distributed in a hypersphere. This is a rotation invariant uniform distribution in $p$ space, and because with sllicing we are mostly interested in hollowness this is more relevant than assuming a multivariate normal distribution.
-
-The fraction of points inside a slice of thickness $h$ can be estimated as the relative volume of the slice compared to the volume of the full hypersphere,
-\begin{equation}
-V_{rel} = \frac{1}{2} \frac{h^{p-2}}{R^p} (p R^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
-\end{equation}
-where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $\epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
-
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.4\textwidth]{diagrams/centered-slice.pdf}
 \hspace{5mm}
@@ -143,23 +159,6 @@ where $R$ is the radius of the hypersphere. The approximation is valid when $h \
 \caption{Illustrations of slicing, through a 3D sphere (left), and deomnstrating the calculation of the orthogonal distance (right). 3D slicing, can be done by sliding the projection plane along the orthogonal direction: centered at the origin (green) and one off-center at $\mathbf{c}$ (blue). This intuition does not transfer to higher dimensions, and it is best to use orthogonal distance between point and projection plane for computing the slice. Because a projection plane has no specific location, for slicing we can prescribe this, as through the data center, or any other point, $\mathbf{c}$.}
 \label{fig:diagrams}
 \end{figure*}
-
-### Anchoring
-
-The equations above assume that the projection plane, and thus the the slice, passes through 0, which will be the mean of centered data. This (center point) is generally a good option for the slice tour, because as the tour progresses the projection plane changes and can catch non-central concavities, too. However it is straightforward generalize the equations to use any center point, $\mathbf{c}$.
-
-In general $\mathbf{c}$ can be any point in the $p$-dimensional parameter space, but we are only interested in the orthogonal component, the part of the vector extedning out of the projection plane, $\mathbf{c}' = \mathbf{c} - (\mathbf{c}\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{c}\cdot \mathbf{a}_2 )\mathbf{a}_2$. The generalized measure of orthogonal distance is then
-\begin{equation}
-v_i^2 = ||\mathbf{x}_i' - \mathbf{c}'||^2 = \mathbf{x}_i'^2 + \mathbf{c}'^2 - 2 \mathbf{x}_i'\cdot\mathbf{c}'
-\end{equation}
-where the cross term can be expressed as
-\begin{equation}
-\mathbf{x}_i'\cdot\mathbf{c}' = \mathbf{x}_i\cdot\mathbf{c} - (\mathbf{c}\cdot \mathbf{a}_1) (\mathbf{x}_i\cdot \mathbf{a}_1) - (\mathbf{c}\cdot \mathbf{a}_2) (\mathbf{x}_i\cdot \mathbf{a}_2).
-\end{equation}
-
-Using the generalized distance measure with a cutoff volume, $\epsilon$, then corresponds to moving a slice of fixed thickness, corresponding to a neighborhood of the projection plane through the anchor point $\mathbf{c}$. In 3D, this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-center anchor point may result in fewer points inside a slice for most data.
-
-*XXX Do we need a diagram?*
 
 # Implementation {#sec:implementation}
 
