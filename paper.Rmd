@@ -136,7 +136,13 @@ V_{rel} = \frac{1}{2} \frac{h^{p-2}}{R^p} (p R^2 - (p-2) h^2) \approx \frac{1}{2
 \end{equation}
 where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $\epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
 
-*XXX Do we need a diagram?*
+\begin{figure*}[ht]
+\centerline{\includegraphics[width=0.4\textwidth]{diagrams/orthogonal-distance.pdf}
+\hspace{5mm}
+\includegraphics[width=0.4\textwidth]{diagrams/centered-slice.pdf}}
+\caption{Schematic diagram showing the calculation of the orthogonal distance (left) and the slice through a 3D sphere (right). We show both a slice centered at the origin (green) and one with a different centering around $\mathbf{c}$.}
+\label{fig:diagrams}
+\end{figure*}
 
 ### Anchoring
 
