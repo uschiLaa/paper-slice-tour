@@ -70,7 +70,7 @@ To make a section, we are interested in the orthogonal distance of the data poin
 
 ### Distance from the origin
 
-The orthogonal distance of the data points from the current projection plane centered at the data mean, is calculated as, 
+The orthogonal distance of the data points from the current projection plane is calculated as, 
 
 \begin{equation}
 \tilde{v}_i^2 = ||\mathbf{x}_i'||^2.
@@ -82,10 +82,9 @@ The orthogonal distance of the data points from the current projection plane cen
 \mathbf{x}_i' = \mathbf{x}_i - (\mathbf{x}_i\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{x}_i\cdot \mathbf{a}_2) \mathbf{a}_2
 \end{equation}
 
-\noindent and $\mathbf{x}_i, i=1,...,n$ is a $p$-dimensional observation in $\mathbf{X}$ and $\mathbf{a}_i, i=1,2$ denoting the columns of the projection matrix, $\mathbf{A}=(\mathbf{a}_1, \mathbf{a}_2)$.
-Calculating the euclidean norm of $\mathbf{x}'$ is straightforward thanks to the orthonormality of $\mathbf{A}$, and gives the components of the required distance vector. This can be generalized for $d>2$.
+\noindent and $\mathbf{x}_i, i=1,...,n$ is a $p$-dimensional observation in $\mathbf{X}$ and $\mathbf{a}_k, k=1,2 (=d)$ denoting the columns of the projection matrix, $\mathbf{A}=(\mathbf{a}_1, \mathbf{a}_2)$. $\mathbf{A}$ is assummed to be through 0, because the data has been centered on its mean. $\mathbf{x}_i'$ can be considered to be a normal from the projection plane to $\mathbf{x}_i$, and then the norm of this vector gives the orthogonal distance between point and plane. This can be generalized for $d>2$.
 
-The distance vector can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In 3D, where for each plane there is only a single orthogonal direction, this defines a flat slice of height $2h$. We could use this single direction to slice systematically from one side of the space to the other. It is also possible to think of front and back, some points are closer to the viewer, and some are far, and depth cues could be used. When going beyond 3D, the dimension of the orthogonal space is $>1$, and all sense of direction is lost. In general, there are $(p-d)$ dimensions orthogonal to the projection plane, so using distance from the points to the plane is the simplest approach to generating slices. Using the euclidean distance results in rotation invariant slicing in the orthogonal space, where a "slice" is spherical in the orthogonal subspace, and has radius $h$.
+The distance can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In 3D, where for each plane there is only a single orthogonal direction, this defines a flat slice of height $2h$. We could use this single direction to slice systematically from one side of the space to the other. It is also possible to think of front and back, some points are closer to the viewer, and some are far, and depth cues could be used. When going beyond 3D, the dimension of the orthogonal space is $>1$, and all sense of direction is lost. In general, there are $(p-d)$ dimensions orthogonal to the projection plane, so using distance from the points to the plane is the simplest approach to generating slices. Using the euclidean distance results in rotation invariant slicing in the orthogonal space, where a "slice" is spherical in the orthogonal subspace, and has radius $h$.
 
 Figure \ref{fig:renderFunction} shows slices through 4D solid and hollow geometric shapes. For each shape, the points are generated either uniformly within the shape, or on the surface. This illustrates the ease of distinguishing the solid from the hollow, once slices are made. Figure \ref{fig:diagrams} illustrates the slicing method for 3D and higher dimensions.
 
