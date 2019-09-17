@@ -134,7 +134,7 @@ The fraction of points inside a slice of thickness $h$ can be estimated as the r
 \begin{equation}
 V_{rel} = \frac{1}{2} \frac{h^{p-2}}{R^p} (p R^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
 \end{equation}
-where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
+where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $\epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
 
 *XXX Do we need a diagram?*
 
@@ -180,7 +180,7 @@ Using the `geozoo` package [@geozoo] a number of ideal shapes are generated.
 ### Hollow sphere
 We sample points on the surface of a sphere with radius $R=1$ in $p=3$ and $p=5$ dimensions. Using the `sphere.hollow()` function, we generate two sample data sets by generating 2000 and 5000 points from a uniform distribution on the surface of a 3D and 5D spheres. For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.1$, i.e. $h = 0.1$ in 3D and $h = 0.46$ in 5D. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure \ref{fig:renderFunction}. Animated gifs of these examples are available at XXX.
 
-It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. Figure \ref{fig:3anchored} shows example views from a slice tour on a 3D sphere with $R=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $R$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<R$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5D sphere. Note however that as dimensionality increases, the larger orthogonal space means that the anchor point will have a large orthogonal component in most views.
+It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. The first row of Figure \ref{fig:3anchored} shows example views from a slice tour on a 3D sphere with $R=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $R$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<R$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5D sphere, see second row of Figure \ref{fig:3anchored}. For this example we generate 20k points on a hollow 5D sphere to resolve the features. Since $h$ increases with $p$ the resolution is reduced compared to the 3D example. Note also that as dimensionality increases, the larger orthogonal space means that the center point will have a large orthogonal component in most views.
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-033.png}
@@ -188,7 +188,12 @@ It is especially instructive to look at the sliced spheres with an off-center an
 \includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-036.png}
 \hspace{5mm}
 \includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-041.png}}
-\caption{Different slices through a 3D hollow sphere with $R=1$, with anchor point $(0.7, 0.7, 0.7)$, showing full circle with small radius (left), circle with radius $<R$ (middle) and circle with radius $R$ (right).}
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored-014.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored-010.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored-001.png}}
+\caption{Different slices through a 3D (first row) and 5D (second row) hollow sphere with $R=1$, with shifted center point, showing full circle with small radius (left), circle with radius $<R$ (middle) and circle with radius $R$ (right).}
 \label{fig:3anchored}
 \end{figure*}
 
@@ -235,9 +240,8 @@ We use the pollen data as an example for a hidden feature generally occluded in 
 ### Non-linear boundaries
 XXX say something about this dataset [@sam.11271]
 
-Selected views from a slice tour of the scaled and centered data, and with large slice volume $\epsilon = 0.15$ are shown in Figure \ref{fig:wine}. The slices allow to clearly see the non-linearity of the boundary between the green and orange group. The first view also shows a non-linear boundary of the purple group. Interestingly this group does not appear at all in the second slice shown here.
+Selected views from a slice tour of the scaled and centered data, and with large slice volume $\epsilon = 0.15$ are shown in the first row of Figure \ref{fig:wine}. The slices allow to clearly see the non-linearity of the boundary between the green and orange group. The first view also shows a non-linear boundary of the purple group. Interestingly this group does not appear at all in the second slice shown here. For comparison we show projections onto the same planes in the second row of Figure \ref{fig:wine}, showing how the observed features can be hidden by overplotting.
 
-XXX Show projection for each of these as well as slice.
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/wine-029.png}
@@ -246,9 +250,15 @@ XXX Show projection for each of these as well as slice.
 \hspace{5mm}
 \includegraphics[width=0.2\textwidth]{gifs/png/wine-049.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/wine-100.png}
-}
-\caption{Different slices through the wine dataset.}
+\includegraphics[width=0.2\textwidth]{gifs/png/wine-100.png}}
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/wine-projected-029.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/wine-projected-042.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/wine-projected-049.png}
+\hspace{5mm}
+\includegraphics[width=0.2\textwidth]{gifs/png/wine-projected-100.png}}
+\caption{Different slices (first row) and projections (second row) of the wine dataset .}
 \label{fig:wine}
 \end{figure*}
 

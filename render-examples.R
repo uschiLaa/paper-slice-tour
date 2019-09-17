@@ -20,14 +20,18 @@ render(sphere5, grand_tour(), display_slice(), 'png', "gifs/png/sphere-5-centere
 
 # Animate with off-center anchoring
 anchor3 <- rep(0.7, 3)
-anchor5 <- rep(0.5, 5)
 
 set.seed(2019)
 render(sphere3, grand_tour(), display_slice(anchor = anchor3), 'png', "gifs/png/sphere-3-anchored-%03d.png", frames = max_f, rescale = FALSE)
 
-# Animate with thicker slice to capture more points in each view
+# render 5d sphere with large number of points and off-center anchor
+sphere5 <- geozoo::sphere.hollow(5, 20000)$points
+colnames(sphere5) <- c("x1", "x2", "x3", "x4", "x5")
+anchor5 <- c(1.2, rep(0, 4))
+max_f <- 100 # max frames for rendering the animation
 set.seed(2019)
 render(sphere5, grand_tour(), display_slice(anchor = anchor5), 'png', "gifs/png/sphere-5-anchored-%03d.png", frames = max_f, rescale = FALSE)
+
 
 torus4 <- geozoo::torus(p=4)$points %>%
   scale()
@@ -70,6 +74,9 @@ wine_poly_scaled <- scale(as.matrix(wine_poly[,1:5]))
 set.seed(201909)
 render(wine_poly_scaled, grand_tour(), display_slice(axes = "bottomleft", eps=0.15, col=col), 'png', "gifs/png/wine-%03d.png", frames = max_f, rescale = FALSE)
 
+# render as projections
+set.seed(201909)
+render(wine_poly_scaled, grand_tour(), display_xy(axes = "bottomleft", col=col), 'png', "gifs/png/wine-projected-%03d.png", frames = max_f, rescale = FALSE)
 
 
 ####### end rendered examples
