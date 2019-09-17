@@ -45,7 +45,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 # Introduction
 
 <!-- Background -->
-Data is commonly high-dimensional, and visualisation often relies on some form of dimension reduction. This can be by taking linear projections, or nonlinear, if one considers techniques like multidimensional scaling (MDS) or t-Distributed Stochastic Neighbor Embedding (t-SNE). For the purposes here, the focus is on linear projections, in particular as provided by the grand tour [@As85; @BCAH05]. Interactive and dynamic displays can provide information beyond what can be achieved in a static display. The grand tour shows a smooth sequence of interpolated low dimensional projections, and allows the viewer to extrapolate from the low-dimensional shapes to the multidimensional distribution. It is particularly useful for detecting clusters, outliers and non-linear dependence. 
+Data is commonly high-dimensional, and visualisation often relies on some form of dimension reduction. This can be done by taking linear projections, or nonlinear if one considers techniques like multidimensional scaling (MDS) (XXXREF) or t-Distributed Stochastic Neighbor Embedding (t-SNE) (XXXREF). For the purposes here, the focus is on linear projections, in particular as provided by the grand tour [@As85; @BCAH05]. Interactive and dynamic displays can provide information beyond what can be achieved in a static display. The grand tour shows a smooth sequence of interpolated low dimensional projections, and allows the viewer to extrapolate from the low-dimensional shapes to the multidimensional distribution. It is particularly useful for detecting clusters, outliers and non-linear dependence. 
 
 <!-- The disadvantage of projection: opacity, occlusion, even with pseudo-transparency from scatterplots;  motivation -->
 A major limitation of projections is their opacity. It is mitigated some, when scatterplots are used to render the projected data, through a pseudo-transparency of sparseness of points. This is improved further if points are also drawn using an alpha level that provides transparent dots on most display devices. Some features of multivariate distributions may be visible, but a lot is easily hidden, especially in the case of concave structures. Considering the example of a simple geometric shape such as a hypershere, it is difficult to distinguish between a full or a hollow sphere, that is, whether points are uniformly distributed within the sphere or on the surface of a sphere. Similarly we can think of small scale structures hidden in the center of a multivariate distribution, that might be considered to be "needles in a haystack", which can be difficult to detect in projections. Projections also obscure non-linear boundaries as might be constructed from a classification model, or nonlinear model fits in high-dimensions. 
@@ -222,7 +222,7 @@ To better understand the slice tour we look at different examples of geometric s
 ## Other examples
 
 ### Needle in a haystack
-We use the pollen data as an example for a hidden feature generally occluded in projections. This 5D 1986 Exposition's dataset was made by David Coleman of RCA Labs. [XXX REF] We center and scale each variable of the dataset and run a slice tour with a thin slice ($\epsilon = 0.0005$). Selected views are shown in the first two plots in Figure \ref{fig:pollen}, indicating the presence of an interesting feature hidden in the center. We next zoom in on the center of the distribution and consider a thicker slice ($\epsilon = 0.005$) to uncover the hidden structure, shown in the last two plots of Figure \ref{fig:pollen}.
+We use the pollen data as an example for a hidden feature generally occluded in projections. This is a classic 5D data set, originally simulated by by David Coleman of RCA Labs, for the Joint Statistics Meetings 1986 Data Expo [@pollen].  The standardised data is observed in a slice tour with a thin slice ($\epsilon = 0.0005$). Selected views are shown in the first two plots in Figure \ref{fig:pollen}. They indicate the presence of an interesting feature hidden in the center, which can be identified as the word "EUREKA" by zooming. 
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/pollen-007.png}
@@ -233,7 +233,7 @@ We use the pollen data as an example for a hidden feature generally occluded in 
 \hspace{5mm}
 \includegraphics[width=0.2\textwidth]{gifs/png/pollen-zoom-018.png}
 }
-\caption{Different slices through the pollen dataset. The first two plots have slice volume $\epsilon = 0.0005$, the last two plots zoom in on the center and have increased volume $\epsilon = 0.005$.}
+\caption{Different slices through the classic pollen dataset. The first two plots have slice volume $\epsilon = 0.0005$, the last two plots zoom in on the center and have increased volume $\epsilon = 0.005$. The hidden word can be seen in the zoomed slice.}
 \label{fig:pollen}
 \end{figure*}
 
