@@ -137,10 +137,10 @@ V_{rel} = \frac{1}{2} \frac{h^{p-2}}{R^p} (p R^2 - (p-2) h^2) \approx \frac{1}{2
 where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $\epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
 
 \begin{figure*}[ht]
-\centerline{\includegraphics[width=0.4\textwidth]{diagrams/orthogonal-distance.pdf}
-\hspace{5mm}
 \includegraphics[width=0.4\textwidth]{diagrams/centered-slice.pdf}}
-\caption{Schematic diagram showing the calculation of the orthogonal distance (left) and the slice through a 3D sphere (right). We show both a slice centered at the origin (green) and one with a different centering around $\mathbf{c}$.}
+\hspace{5mm}
+\centerline{\includegraphics[width=0.4\textwidth]{diagrams/orthogonal-distance.pdf}
+\caption{Illustrations of  slicing, through a 3D sphere (left), and deomnstrating the calculation of the orthogonal distance  (right). 3D slicing, can be done by sliding the projection plane along the orthogonal direction: centered at the origin (green) and one off-center at $\mathbf{c}$ (blue). This intuition does not transfer to higher dimensions, and it is best to use orthogonal distance between point and projection plane for computing the slice. Because a projection plane has no specific location, for slicing we can prescribe this, as through the data center, or any other point, $\mathbf{c}$.}
 \label{fig:diagrams}
 \end{figure*}
 
