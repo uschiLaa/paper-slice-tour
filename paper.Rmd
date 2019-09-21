@@ -28,7 +28,7 @@ abstract: |
   implemented in R as an extension to the tourr package, and can be used to
   explore for concave and non-linear structures in multivariate distributions.
 keywords: |
-  data visualisation; grand tour; sectioning
+  data visualisation; grand tour; sectioning; statistical computing; statistical graphics; high-dimensional data
 header-includes: |
   \usepackage{hyperref}
   \usepackage[utf8]{inputenc}
@@ -187,16 +187,16 @@ We sample points on the surface of a sphere with radius $R=1$ in $p=3$ and $p=5$
 It is especially instructive to look at the sliced spheres with an off-center anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. The first row of Figure \ref{fig:3anchored} shows example views from a slice tour on a 3D sphere with $R=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $R$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<R$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5D sphere, see second row of Figure \ref{fig:3anchored}. For this example we generate 20k points on a hollow 5D sphere to resolve the features. Since $h$ increases with $p$ the resolution is reduced compared to the 3D example. Note also that as dimensionality increases, the larger orthogonal space means that the center point will have a large orthogonal component in most views.
 
 \begin{figure*}[ht]
-\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-033.png}
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored/sphere-3-anchored-033.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-036.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored/sphere-3-anchored-036.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored-041.png}}
-\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored-014.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored/sphere-3-anchored-041.png}}
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored/sphere-5-anchored-014.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored-010.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored/sphere-5-anchored-010.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored-001.png}}
+\includegraphics[width=0.2\textwidth]{gifs/png/sphere-5-anchored/sphere-5-anchored-001.png}}
 \caption{Different slices through a 3D (first row) and 5D (second row) hollow sphere with $R=1$, with shifted center point, showing full circle with small radius (left), circle with radius $<R$ (middle) and circle with radius $R$ (right).}
 \label{fig:3anchored}
 \end{figure*}
@@ -205,17 +205,17 @@ It is especially instructive to look at the sliced spheres with an off-center an
 To better understand the slice tour we look at different examples of geometric shapes, see Figure \ref{fig:geoms}. For each shape two selected views are shown. The first column shows views from the slice tour on a 3D Roman surface. The second column shows slices through a 4D torus, revealing different aspects of the shape. The last column shows a 6d cube, where the upper plot shows a view along two of the original parameters, allowing to clearly identify the rectangular shape. The panel below shows that this is not typically the case when looking at a randomly selected slice.
 
 \begin{figure*}[ht]
-\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/roman-surface-centered-010.png}
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/roman-surface/roman-surface-centered-010.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/torus-4-centered-015.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/torus-4-centered/torus-4-centered-015.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/cube-6-centered-001.png}}
+\includegraphics[width=0.2\textwidth]{gifs/png/cube-6-centered/cube-6-centered-001.png}}
 \centerline{
-\includegraphics[width=0.2\textwidth]{gifs/png/roman-surface-centered-032.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/roman-surface/roman-surface-centered-032.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/torus-4-centered-033.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/torus-4-centered/torus-4-centered-033.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/cube-6-centered-063.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/cube-6-centered/cube-6-centered-063.png}
 }
 \caption{Different slices through a Roman surface (left), 4D torus (middle) and a 6d cube (right).}
 \label{fig:geoms}
@@ -229,50 +229,53 @@ To better understand the slice tour we look at different examples of geometric s
 We use the pollen data as an example for a hidden feature generally occluded in projections. This is a classic 5D data set, originally simulated by by David Coleman of RCA Labs, for the Joint Statistics Meetings 1986 Data Expo [@pollen].  The standardised data is observed in a slice tour with a thin slice ($\epsilon = 0.0005$). Selected views are shown in the first two plots in Figure \ref{fig:pollen}. They indicate the presence of an interesting feature hidden in the center, which can be identified as the word "EUREKA" by zooming. 
 
 \begin{figure*}[ht]
-\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/pollen-007.png}
+\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/pollen/pollen-007.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/pollen-092.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/pollen/pollen-092.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/pollen-zoom-075.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/pollen-zoom/pollen-zoom-075.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/pollen-zoom-018.png}
+\includegraphics[width=0.2\textwidth]{gifs/png/pollen-zoom/pollen-zoom-018.png}
 }
 \caption{Different slices through the classic pollen dataset. The first two plots have slice volume $\epsilon = 0.0005$, the last two plots zoom in on the center and have increased volume $\epsilon = 0.005$. The hidden word can be seen in the zoomed slice.}
 \label{fig:pollen}
 \end{figure*}
 
 ### Non-linear boundaries
-XXX say something about this dataset [@sam.11271]
+@sam.11271 described some principles and approaches for visualising models in the data space. Much of this is based on examining projections provided by a tour of the model in the high-dimensional space. Classification boundaries are explored for the wine data set [@asuncion:2007]. It is difficult to digest the boundaries fully -- for example, where one group's boundary wraps another for example, if they ar linear or nonlinear, or whether the boundary goes through the space or is only carving out a corner of it. The sliced projections makes this easier. 
 
-Selected views from a slice tour of the scaled and centered data, and with large slice volume $\epsilon = 0.15$ are shown in the first row of Figure \ref{fig:wine}. The slices allow to clearly see the non-linearity of the boundary between the green and orange group. The first view also shows a non-linear boundary of the purple group. Interestingly this group does not appear at all in the second slice shown here. For comparison we show projections onto the same planes in the second row of Figure \ref{fig:wine}, showing how the observed features can be hidden by overplotting.
-
+Selected views of projections and sliced projections from a radial basis SVM on 3 variables, and a polynomial basis SVM on 5 variables are shown in Figure \ref{fig:wine}. A large slice volume $\epsilon = 0.15$ is used. The slicing allows exploring the center of the space. With 3D it reveals the spherical boundary of the group (green) hidden by the projection. In 5D with the polynomial basis, projection might suggest that the boundary between classes is almost linear, but the slicing shows that it to be nonlinear near the center. 
 
 \begin{figure*}[ht]
-\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/wine-029.png}
+\centerline{
+\includegraphics[width=0.3\textwidth]{gifs/png/wine-radial-projected/wine-radial-projected-031.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/wine-042.png}
+\includegraphics[width=0.3\textwidth]{gifs/png/wine-poly-projected/wine-poly-projected-096.png}
+\includegraphics[width=0.3\textwidth]{gifs/png/wine-poly-projected/wine-poly-projected-042.png}}
+\centerline{
+\includegraphics[width=0.3\textwidth]{gifs/png/wine-radial/wine-radial-031.png}
 \hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/wine-049.png}
-\hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/wine-100.png}}
-\centerline{\includegraphics[width=0.2\textwidth]{gifs/png/wine-projected-029.png}
-\hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/wine-projected-042.png}
-\hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/wine-projected-049.png}
-\hspace{5mm}
-\includegraphics[width=0.2\textwidth]{gifs/png/wine-projected-100.png}}
-\caption{Different slices (first row) and projections (second row) of the wine dataset .}
+\includegraphics[width=0.3\textwidth]{gifs/png/wine-poly/wine-poly-096.png}
+\includegraphics[width=0.3\textwidth]{gifs/png/wine-poly/wine-poly-042.png}
+}
+\caption{Exploring classification boundaries of the wine dataset using projection (top row) and sliced projection (bottom row). Radial basis SVM (First column) of 3 variables shows how the slicing reveals the spherical shape of the boundary of one group (green) that was hidden in the projection. Polynomial basis SVM (second and third columns) of 5 variables. The orange group does tend to be wrapped by the green group, and the blue group disappears with slicing, showing that it is on the outer edge of the space.}
 \label{fig:wine}
 \end{figure*}
 
 
 # Discussion {#sec:discussion}
 
-In this note we introduce a new visualization method for dynamic slicing of high-dimensional parameter spaces. It is based on interpolated projections obtained in a grand tour and generates an interpolated sequence of sliced projections. The examples shown in Section XXX demonstrate the potential of this new display to find and explore concave structures, as well as other hidden features.
+This paper has introduced a new visualization method for dynamic slicing of high-dimensional spaces. It is based on interpolated projections obtained in a (grand) tour and generates an interpolated sequence of sliced projections. The examples shown in Section \ref{sec:examples} demonstrate the potential of this new display to find and explore concave structures, as well as other hidden features.
 
-In applications with large number of dimensions and where only a few samples are available the method is limited. In this case thick slices may be needed to get a sufficient number of observations inside the slice, and as a result  small scale structures cannot be resolved in the slice tour. If on the other hand a large number of samples are available one may consider displaying only points inside the slice to keep a clear display.
+A default slice thickness is provided with the algorithm, that takes dimensionality into account. As the data dimension increases, more points in the sample are needed, and a thicker slice may be needed. Generally, the tour can be slow to view when there are a large number of samples, and the slicing, where only points inside the slice are drawn, might also be a way to improve the display drawing, with a focus on the important features.
 
-Instead of slicing in the full $p-d=p-2$ dimensional orthogonal space we can also use a subspace in which to slice. As pointed out in @prosection combining projections with sectioning in varying numbers of dimensions can reveal the codimension of an unknown distribution. One approach would be to interpolate between projection matrices with more than two columns, and use the first two for the display projection. The remaining directions then provide an orthogonal subspace that can be used for sectioning. A subtlety to consider is that geodesic interpolation is not ideal for such applications, as it ignores rotations between the directions in the projection matrix. As alternative interpolation methods are not currently available in the R implementation, we leave such extensions for future work.
+Sliced 2D tours was available in XGobi [@SCB98] but was not documented. This work makes them available in the `tourr` package. It is a simple, but effective, approach to taking slices. 
 
-In addition slice definitions beyond a simple cutoff on the orthogonal distance should be considered, where different definition can be used to highlight certain aspects of the data. We also expect interesting new developments by combining the slice tour and the guided tour into a weighted guided tour with index functions using the distance vector information in addition to the projected data points.
+The approach by @prosection is more complex, and slices a subspace  of the $p-d=p-2$ dimensional space orthogonal to the projection. This generates a more parameters, making it more difficult to navigate. More parameters mean more decisions on what to show. However, it is one of the next steps to explore different definitions of a slice tour, and the types of structure that might be captured by variations in slicing algorithms.
+
+Lastly, there is a large literature on projection pursuit, and some of this work is available in the projection pursuit guided tour in the `tourr` package. The projections shown are more interesting in a guided tour than might be seen using a grand tour. The slicing might be introduced into projection pursuit by defining weighted projection pursuit indexes. The resulting indexes could be incorporated into a guided slice tour, finding projections where the slice reveals something new. 
+
+# Acknowledgements
+
+The paper was written in `rmarkdown` [@rmarkdown] using `knitr` [@knitr]. The source material and animated gifs for this paper are available at
+\url{https://github.com/uschiLaa/paper-slice-tour}.

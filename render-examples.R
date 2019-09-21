@@ -66,17 +66,44 @@ set.seed(201909)
 render(pollen, grand_tour(), display_slice( half_range=1, eps=0.005, axes = "bottomleft"), 'png', "gifs/png/pollen-zoom-%03d.png", frames = max_f, rescale = FALSE)
 
 library(RColorBrewer)
-wine_radial <- read_csv("data/wine-svm-radial.csv")
 wine_poly <- read_csv("data/wine-svm-poly.csv")
 clrs <- brewer.pal(3, "Dark2")
 col <- clrs[as.numeric(as.factor(wine_poly$type))]
 wine_poly_scaled <- scale(as.matrix(wine_poly[,1:5]))
 set.seed(201909)
-render(wine_poly_scaled, grand_tour(), display_slice(axes = "bottomleft", eps=0.15, col=col), 'png', "gifs/png/wine-%03d.png", frames = max_f, rescale = FALSE)
+render(wine_poly_scaled, grand_tour(), 
+       display_slice(axes = "bottomleft", eps=0.15, col=col, cex=4), 
+       'png', "gifs/png/wine-poly/wine-poly-%03d.png", frames = max_f, rescale = FALSE)
 
 # render as projections
 set.seed(201909)
-render(wine_poly_scaled, grand_tour(), display_xy(axes = "bottomleft", col=col), 'png', "gifs/png/wine-projected-%03d.png", frames = max_f, rescale = FALSE)
+render(wine_poly_scaled, 
+       grand_tour(), display_xy(axes = "bottomleft", col=col), 
+       'png', "gifs/png/wine-poly-projected/wine-poly-projected-%03d.png", frames = max_f, rescale = FALSE)
+
+# Radial
+wine_radial <- read_csv("data/wine-svm-radial.csv")
+wine_radial <- wine_radial %>% 
+  group_by(type) %>%
+  sample_frac(0.5)
+
+col <- clrs[as.numeric(as.factor(wine_radial$type))]
+wine_radial_scaled <- scale(as.matrix(wine_radial[,1:3]))
+set.seed(201909)
+render(wine_radial_scaled, grand_tour(), 
+       display_slice(axes = "bottomleft", eps=0.05, col=col), 
+       'png', "gifs/png/wine-radial/wine-radial-%03d.png", frames = max_f, rescale = FALSE)
+set.seed(201909)
+render(wine_radial_scaled, 
+       grand_tour(), display_xy(axes = "bottomleft", col=col), 
+       'png', "gifs/png/wine-radial-projected/wine-radial-projected-%03d.png", frames = max_f, rescale = FALSE)
+
+
+# Render to animated gif
+library(gifski)
+fls <- list.files("gifs/png/wine-radial/")
+gifski(fls , "wine-radial.gif")
+
 
 
 ####### end rendered examples
