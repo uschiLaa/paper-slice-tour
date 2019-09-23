@@ -5,17 +5,17 @@ Taking projections of high-dimensional data is a common analytical and visualisa
 Animations
 -------------
 
-<img src="gifs/sphere-3-centered.gif" width="70"/>
-<img src="gifs/sphere-5-centered.gif" width="70"/>
-<img src="gifs/sphere-3-anchored.gif" width="70"/>
-<img src="gifs/sphere-5-anchored.gif" width="70"/>
-<img src="gifs/roman-surface-centered.gif" width="70"/>
-<img src="gifs/torus-4-centered.gif" width="70"/>
-<img src="gifs/cube-6-centered.gif" width="70"/>
-<img src="gifs/pollen.gif" width="70"/>
-<img src="gifs/pollen-zoom.gif" width="70"/>
-<img src="gifs/wine-radial-projected.gif" width="70"/>
-<img src="gifs/wine-poly-projected.gif" width="70"/>
-<img src="gifs/wine-radial.gif" width="70"/>
-<img src="gifs/wine-poly.gif" width="70"/>
+<img src="gifs/sphere-3-centered.gif" width="170"/>
+<img src="gifs/sphere-5-centered.gif" width="170"/>
+<img src="gifs/sphere-3-anchored.gif" width="170"/>
+<img src="gifs/sphere-5-anchored.gif" width="170"/>
+<img src="gifs/roman-surface-centered.gif" width="170"/>
+<img src="gifs/torus-4-centered.gif" width="170"/>
+<img src="gifs/cube-6-centered.gif" width="170"/>
+<img src="gifs/pollen.gif" width="170"/>
+<img src="gifs/pollen-zoom.gif" width="170"/>
+<img src="gifs/wine-radial-projected.gif" width="170"/>
+<img src="gifs/wine-poly-projected.gif" width="170"/>
+<img src="gifs/wine-radial.gif" width="170"/>
+<img src="gifs/wine-poly.gif" width="170"/>
 
