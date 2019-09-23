@@ -2,19 +2,15 @@ import os
 
 
 p = "./png/"
-allNames = os.listdir(p)
-allNamesUnique = []
-for n in allNames:                                
-  n = n[0:-8]
-  if not n in allNamesUnique: allNamesUnique.append(n)
+names = os.listdir(p)
 
 import moviepy.editor as mpy
 
-for cn in allNamesUnique:                         
-  cNames = []        
-  for nn in allNames:                                 
-    if cn in nn: cNames.append(nn)
+for cn in names:                         
+  cNames = os.listdir(p+cn)
+#  for nn in os.listdir(p+cn):
+#    cNames.append(nn.split(".")[0])
   cNames = sorted(cNames)
-  cPaths = [p+cName for cName in cNames]
+  cPaths = [p+cn+"/"+cName for cName in cNames]
   clip = mpy.ImageSequenceClip(cPaths, fps=6)
   clip.write_gif(cn+".gif", fps=6)
