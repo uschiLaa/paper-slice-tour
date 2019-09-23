@@ -98,7 +98,7 @@ The fraction of points inside a slice of thickness $h$ can be estimated as the r
 \begin{equation}
 V_{rel} = \frac{1}{2} \frac{h^{p-2}}{R^p} (p R^2 - (p-2) h^2) \approx \frac{1}{2} (\frac{h}{R})^{p-2},
 \end{equation}
-where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $\epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.001.
+where $R$ is the radius of the hypersphere. The approximation is valid when $h \ll R$, as is typically expected to be the case. To keep the relative number of points (i.e. $V_{rel}$) approximately constant for slices in different dimensions $p$, we calculate $h$ from a volume parameter as $h = \epsilon^{1/(p-2)}$, where $\epsilon$ is a pre-chosen value indicating a fraction of the overall volume to slice, say 0.1.
 
 ### Non-central slice
 
@@ -161,7 +161,7 @@ grid.arrange(a, b, c, d, nrow=1)
 
 # Implementation {#sec:implementation}
 
-The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the centre point $\mathbf{c}$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the mean. In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3D sphere.
+The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the centre point $\mathbf{c}$ is set by the `anchor` argument. By default `eps=0.1` and `anchor=NULL`, resulting in slicing through the mean. In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3D sphere.
 
 ```{r codeExampel, echo=TRUE, eval=FALSE}
 library(tourr)
