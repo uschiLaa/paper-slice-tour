@@ -277,4 +277,4 @@ Lastly, there is a large literature on projection pursuit, and some of this work
 
 # Acknowledgements
 
-The paper was written in `rmarkdown` [@rmarkdown] using `knitr` [@knitr]. The source material for this paper are available at \url{https://github.com/uschiLaa/paper-slice-tour} and animated gifs can be found at \url{https://uschilaa.github.io/paper-slice-tour/}.
+The paper was written in `rmarkdown` [@rmarkdown] using `knitr` [@knitr]. The source material for this paper are available at \url{https://github.com/uschiLaa/paper-slice-tour} and animated gifs can be found at \url{https://uschilaa.github.io/paper-slice-tour/}. An appendix deriving the relative slice volume for the hypersphere is included as supplemental material. 
