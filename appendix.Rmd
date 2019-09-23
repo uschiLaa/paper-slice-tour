@@ -1,46 +1,12 @@
 ---
 title: "Appendix"
-type: Short Technical Note
-author:
-  - name: Ursula Laa
-    affil: a, b
-    email: ursula.laa@monash.edu
-  - name: Dianne Cook
-    affil: b
-    email: dicook@monash.edu
-  - name: German Valencia
-    affil: a
-    email: german.valencia@monash.edu
-affiliation:
-  - num: a
-    address: |
-      School of Physics and Astronomy, Monash University
-  - num: b
-    address: |
-      Department of Econometrics and Business Statistics, Monash University
-bibliography: biblio.bib
-geometry: margin=2.5cm
-abstract: |
-  Taking projections of high-dimensional data is a common analytical and visualisation technique in statistics for working with high-dimensional problems. Sectioning, or slicing, through high dimensions is less common, but can be useful for visualising data with concavities, or non-linear structure. It is associated with conditional distributions in statistics, and also linked brushing between plots in interactive data visualisation. This short technical note describes a simple approach for  slicing in the orthogonal
-  space of projections obtained when running a tour, thus presenting the viewer
-  with an interpolated sequence of sliced projections. The method has been
-  implemented in R as an extension to the tourr package, and can be used to
-  explore for concave and non-linear structures in multivariate distributions.
-keywords: |
-  data visualisation; grand tour; sectioning
-header-includes: |
-  \usepackage{hyperref}
-  \usepackage[utf8]{inputenc}
-  \def\tightlist{}
-  \usepackage{setspace}
-output: rticles::tf_article
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 ```
 
-\doublespacing
 # Slice volume derivation
 
 We calculate the relative volume of a slice through a $p$ dimensional hypersphere of radius $R$. In general the volume of a full hypersphere with radius $r$ in $q$ dimensions is given as
