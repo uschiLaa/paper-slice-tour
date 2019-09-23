@@ -35,6 +35,7 @@ header-includes: |
   \def\tightlist{}
   \usepackage{setspace}
 output: rticles::tf_article
+keep_tex: true
 ---
 
 ```{r setup, include=FALSE}
