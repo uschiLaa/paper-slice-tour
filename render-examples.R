@@ -101,89 +101,11 @@ render(wine_radial_scaled,
 
 # Render to animated gif
 library(gifski)
-fls <- list.files("gifs/png/wine-radial/")
-gifski(fls , "wine-radial.gif")
+all_dir <- list.dirs(path = "gifs/png", recursive = FALSE)
+for (d in all_dir){
+  name <- paste0("gifs/", strsplit(d, "/")[[1]][3], ".gif")
+  fls <- list.files(d, full.names = TRUE)
+  gifski(fls , name)
+}
 
-
-
-####### end rendered examples
-
-
-#testing out different anchor in 5d with large sample
-sphere5 <- geozoo::sphere.hollow(5, 50000)$points
-colnames(sphere5) <- c("x1", "x2", "x3", "x4", "x5")
-anchor5 <- c(1.1, 0, 0, 0, 0)
-animate(sphere5, grand_tour(), display_slice(anchor = anchor5), rescale = FALSE)
-
-### playing with other exampels
-
-ex1 <- geozoo::boy.surface()$points
-colnames(ex1) <- c("x1", "x2", "x3")
-animate_slice(ex1)
-
-ex2 <- geozoo::cross.cap()$points
-colnames(ex2) <- c("x1", "x2", "x3")
-animate_slice(ex2)
-
-# nice example, only sometimes do we see "corners and edges"
-ex3 <- geozoo::cube.face(6)$points %>%
-  center()
-colnames(ex3) <- c("x1", "x2", "x3", "x4", "x5", "x6")
-animate_slice(ex3)
-
-ex4 <- geozoo::dini.surface()$points %>%
-  scale()
-colnames(ex4) <- c("x1", "x2", "x3")
-animate_slice(ex4)
-
-ex5 <- geozoo::enneper.surface()$points %>%
-  scale()
-colnames(ex5) <- c("x1", "x2", "x3")
-animate_slice(ex5)
-
-# not so nice as example
-ex6 <- geozoo::klein.fig.eight()$points %>%
-  scale()
-colnames(ex6) <- c("x1", "x2", "x3", "x4")
-animate_slice(ex6)
-
-ex7 <- geozoo::mobius()$points %>%
-  scale()
-colnames(ex7) <- c("x1", "x2", "x3")
-animate_slice(ex7)
-
-ex8 <- geozoo::roman.surface()$points %>%
-  scale()
-colnames(ex8) <- c("x1", "x2", "x3")
-animate_slice(ex8)
-
-# cant really make sense of the torus
-ex9 <- geozoo::torus.flat()$points
-colnames(ex9) <- c("x1", "x2", "x3", "x4")
-anchorT <- c(0.5, 0.5, 0.5, 0.5)
-animate_slice(ex9, anchor=anchorT)
-
-ex10 <- geozoo::torus(p=4)$points %>%
-  scale()
-colnames(ex10) <- c("x1", "x2", "x3", "x4")
-animate_slice(ex10, eps=0.01)
-
-# Classical pollen data: this doesn't work, structure is 2D in 5D so mostly missed
-library(animation)
-data(pollen)
-pollen <- as.matrix(pollen) %>% scale()
-animate_slice(pollen, axes = "bottomleft", eps=0.0005, half_range=3)
-
-# Could we look at nonlinear boundaries between classifiers
-library(RColorBrewer)
-wine_radial <- read_csv("data/wine-svm-radial.csv")
-wine_poly <- read_csv("data/wine-svm-poly.csv")
-clrs <- brewer.pal(3, "Dark2")
-col <- clrs[as.numeric(as.factor(wine_poly$type))]
-wine_poly_scaled <- scale(as.matrix(wine_poly[,1:5]))
-animate_slice(as.matrix(wine_poly[,1:5]), axes = "bottomleft", 
-              eps=0.001, col=col)
-animate_slice(wine_poly_scaled, axes = "bottomleft", 
-              eps=0.05, col=col)
-animate_xy(as.matrix(wine_poly[,1:5]), axes = "bottomleft", col=col)
 

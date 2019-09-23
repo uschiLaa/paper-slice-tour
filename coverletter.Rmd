@@ -18,6 +18,6 @@ Please consider our manuscript titled "A slice tour for finding hollowness in hi
 
 This note describes a new method for the visualisation of high-dimensional data by defining slices in the orthogonal space of 2D projections. It can be combined with a tour for a dynamic display that shows slices on a path of interpolated projections. The method has been implemented in R as a new display option in the tourr package. It is particularly useful to explore for concave and non-linear structures in multivariate distributions. Several examples are included in the note and illustrate the potential for different types of applications.
 
-We believe that it is a good fit as a short technical note in the Journal of Computational and Graphical Statistics. Tew graphical method that will be useful to people working in multivariate analysis.
+We believe that it is a good fit as a short technical note in the Journal of Computational and Graphical Statistics. The graphical method will be useful to people working in multivariate analysis.
 
 Thank you for the consideration of this manuscript.
