@@ -5,5 +5,4 @@ Taking projections of high-dimensional data is a common analytical and visualisa
 Animations
 -------------
 
-
-![](gifs/sphere-3-anchored.gif)
+<img src="gifs/sphere-3-centered.gif" width="40"/>
