@@ -6,4 +6,4 @@ Animations
 -------------
 
 
-<img src="gifs/sphere-3-centered" width="20%" />
+![](gifs/sphere-3-anchored.gif)
