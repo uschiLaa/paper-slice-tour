@@ -51,7 +51,7 @@ Data is commonly high-dimensional, and visualisation often relies on some form o
 A major limitation of projections is their opacity. It is mitigated some, when scatterplots are used to render the projected data, through a pseudo-transparency of sparseness of points. This is improved further if points are also drawn using an alpha level that provides transparent dots on most display devices. Some features of multivariate distributions may be visible, but a lot is easily hidden, especially in the case of concave structures. Considering the example of a simple geometric shape such as a hypershere, it is difficult to distinguish between a full or a hollow sphere, that is, whether points are uniformly distributed within the sphere or on the surface of a sphere. Similarly we can think of small scale structures hidden in the centre of a multivariate distribution, that might be considered to be "needles in a haystack", which can be difficult to detect in projections. Projections also obscure non-linear boundaries as might be constructed from a classification model, or nonlinear model fits in high-dimensions. 
 
 <!-- Our approach: introduce sections; many different ways to slice, refer to linked brushing as slicing whcih mirrors prosection, but here we will explain/utilise a simple slicing on the projection where point in orthogonal space are faded. -->
-Slicing, or sectioning, is a way that the internal distribution of high-dimensional data can be explored. @prosection discusses a technique for combining projections, with sections constructed by slicing in the dimensions orthogonal to the projection. It is also possible to think of linked brushing (e.g. @ggobiCSDA2003, @JSSv081i05) as slicing. In this note, we discuss an approach to sectioning, where observations in the space orthogonal to the projection are highlighted if they are close to a projection plane through the mean of the data, and faded if further afield. This is combined with the grand tour to provide a new dynamic display that can be used to systematically search for features hidden in high dimensions.
+Slicing, or sectioning, is a way that the internal distribution of high-dimensional data can be explored. @prosection discusses a technique for combining projections with sections constructed by slicing in the dimensions orthogonal to the projection. It is also possible to think of linked brushing (e.g. @ggobiCSDA2003, @JSSv081i05) as slicing. In this note, we discuss an approach to sectioning, where observations in the space orthogonal to the projection are highlighted if they are close to a projection plane through the mean of the data, and faded if further afield. This is combined with the grand tour to provide a new dynamic display that can be used to systematically search for features hidden in high dimensions.
 
 <!-- paper structure --> 
 The new section tour method is described in Section \ref{sec:method}, and it is implemented in the `tourr` [@tourr] package in R [@rref] (Section \ref{sec:implementation}).  Section \ref{sec:examples} illustrates the use on several high-dimensional geometric shapes and established data sets, showing how concave or occluded structures can be visualised and explored with a slice tour. Future work is discussed in Section \ref{sec:discussion}.
@@ -64,7 +64,7 @@ A tour provides a continuous sequence of $d$-dimensional (typically $d=1$ or $2$
 
 For the explanation of the slice tour, the actual mechanics of the tour are not important, and only the notion of a projection plane in high dimensions is needed. The notation used for explanations starts with denoting each projection as $\mathbf{X}$ the $n\times p$ dimensional data matrix ($n$ observations in $p$ dimensions) and $\mathbf{A}$ an orthonormal $p \times d$ projection matrix. The $d$-dimensional projection of the data is thus given by $\mathbf{Y} = \mathbf{X}\cdot\mathbf{A}$, producing the $n\times d$ dimensional projected data matrix to be plotted in each frame of the tour display.
 
-To make a section, we are interested in the orthogonal distance of the data points from an anchored projection plane, particularly using $d=2$, but the approach theoretically works for any $d$. 
+To make a section, we are interested in the orthogonal distance of the data points from a projection plane, particularly using $d=2$, but the approach theoretically works for any $d$. 
 
 ## Slicing in the orthogonal space
 
@@ -73,7 +73,7 @@ To make a section, we are interested in the orthogonal distance of the data poin
 The orthogonal distance of the data points from the current projection plane is calculated as, 
 
 \begin{equation}
-\tilde{v}_i^2 = ||\mathbf{x}_i'||^2.
+\tilde{v}_i^2 = ||\mathbf{x}_i'||^2,
 \end{equation}
 
 \noindent where 
@@ -84,7 +84,7 @@ The orthogonal distance of the data points from the current projection plane is 
 
 \noindent and $\mathbf{x}_i, i=1,...,n$ is a $p$-dimensional observation in $\mathbf{X}$ and $\mathbf{a}_k, k=1,2 (=d)$ denoting the columns of the projection matrix, $\mathbf{A}=(\mathbf{a}_1, \mathbf{a}_2)$. $\mathbf{A}$ is assumed to be through 0, because the data has been centred on its mean. $\mathbf{x}_i'$ can be considered to be a normal from the projection plane to $\mathbf{x}_i$, and then the norm of this vector gives the orthogonal distance between point and plane. This can be generalized for $d>2$.
 
-The distance can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In 3D, where for each plane there is only a single orthogonal direction, this defines a flat slice of height $2h$. We could use this single direction to slice systematically from one side of the space to the other. It is also possible to think of front and back, some points are closer to the viewer, and some are far, and depth cues could be used. When going beyond 3D, the dimension of the orthogonal space is $>1$, and all sense of direction is lost. In general, there are $(p-d)$ dimensions orthogonal to the projection plane, so using distance from the points to the plane is the simplest approach to generating slices. Using the Euclidean distance results in rotation invariant slicing in the orthogonal space, where a "slice" is spherical in the orthogonal subspace, and has radius $h$.
+The distance can then be used to display a slice tour by highlighting points for which the orthogonal distance is smaller than a selected cutoff value $h$. In 3D, where for each plane there is only a single orthogonal direction, this defines a flat slice of height $2h$. We could use this single direction to slice systematically from one side of the space to the other. It is also possible to think of front and back, some points are closer to the viewer, and some are far, and depth cues could be used. When going beyond 3D, the dimension of the orthogonal space is $>1$, and all sense of direction is lost. In general, there are $(p-d)$ dimensions orthogonal to the projection plane, and using distance from the points to the plane is the simplest approach to generating slices. Using the Euclidean distance results in rotation invariant slicing in the orthogonal space, where a "slice" is spherical in the orthogonal subspace, and has radius $h$.
 
 Figure \ref{fig:renderFunction} shows slices through 4D solid and hollow geometric shapes. For each shape, the points are generated either uniformly within the shape, or on the surface. This illustrates the ease of distinguishing the solid from the hollow, once slices are made. Figure \ref{fig:diagrams} illustrates the slicing method for 3D and higher dimensions.
 
@@ -102,7 +102,7 @@ where $R$ is the radius of the hypersphere. The approximation is valid when $h \
 
 ### Non-central slice
 
-The equations above assume that the projection plane, and thus the the slice, passes through 0, which will be the mean of centred data. This (centre point) is generally a good option for the slice tour, because as the tour progresses the projection plane changes and can catch non-central concavities, too. However it is straightforward generalize the equations to use any centre point, $\mathbf{c}$.
+The equations above assume that the projection plane, and thus the the slice, passes through 0, which will be the mean of centred data. This (centre point) is generally a good option for the slice tour, because as the tour progresses the projection plane changes and can catch non-central concavities, too. However it is straightforward to generalize the equations to use any centre point, $\mathbf{c}$.
 
 In general $\mathbf{c}$ can be any point in the $p$-dimensional parameter space, but we are only interested in the orthogonal component, the part of the vector extending out of the projection plane, $\mathbf{c}' = \mathbf{c} - (\mathbf{c}\cdot \mathbf{a}_1) \mathbf{a}_1 - (\mathbf{c}\cdot \mathbf{a}_2 )\mathbf{a}_2$. The generalized measure of orthogonal distance is then
 \begin{equation}
@@ -113,7 +113,7 @@ where the cross term can be expressed as
 \mathbf{x}_i'\cdot\mathbf{c}' = \mathbf{x}_i\cdot\mathbf{c} - (\mathbf{c}\cdot \mathbf{a}_1) (\mathbf{x}_i\cdot \mathbf{a}_1) - (\mathbf{c}\cdot \mathbf{a}_2) (\mathbf{x}_i\cdot \mathbf{a}_2).
 \end{equation}
 
-Using the generalized distance measure with a cutoff volume, $\epsilon$, then corresponds to moving a slice of fixed thickness, corresponding to a neighbourhood of the projection plane through the anchor point $\mathbf{c}$. In 3D, this simply corresponds to moving up or down along the orthogonal direction. Note that selecting an off-centre anchor point may result in fewer points inside a slice for most data.
+Using the generalized distance measure with a cutoff volume, $\epsilon$, then corresponds to moving a slice of fixed thickness, corresponding to a neighbourhood of the projection plane through the centre point $\mathbf{c}$. In 3D, this simply corresponds to moving up or down along the orthogonal direction. Note that moving $\mathbf{c}$ off-centre will result in fewer points inside a slice for most data.
 
 ```{r renderFunction, echo=FALSE, eval=TRUE, warning=FALSE, fig.height=1.5, fig.width = 5.5, fig.cap="Sliced projections through 4D geometric shapes. On the left a full (hollow) hypersphere (a, b), on the right a full (hollow) hypercube (c, d). Points inside the slice are shown as black bullets, points outside the slice are shown as grey dots. We can clearly distinguish the full from the hollow objects based on the slice display.\\label{fig:renderFunction}"}
 library(tidyverse)
@@ -155,13 +155,13 @@ grid.arrange(a, b, c, d, nrow=1)
 \centerline{\includegraphics[width=0.4\textwidth]{diagrams/centered-slice.pdf}
 \hspace{5mm}
 \includegraphics[width=0.4\textwidth]{diagrams/orthogonal-distance.pdf}}
-\caption{Illustrations of slicing, through a 3D sphere (left), and demonstrating the calculation of the orthogonal distance (right). 3D slicing, can be done by sliding the projection plane along the orthogonal direction: centred at the origin (green) and one off-centre at $\mathbf{c}$ (blue). This intuition does not transfer to higher dimensions, and it is best to use orthogonal distance between point and projection plane for computing the slice. Because a projection plane has no specific location, for slicing we can prescribe this, as through the data centre, or any other point, $\mathbf{c}$.}
+\caption{Illustrations of slicing, through a 3D sphere (left), and demonstrating the calculation of the orthogonal distance (right). 3D slicing can be done by sliding the projection plane along the orthogonal direction: centred at the origin (green) and one off-centre at $\mathbf{c}$ (blue). This intuition does not transfer to higher dimensions, and it is best to use orthogonal distance between point and projection plane for computing the slice. Because a projection plane has no specific location, for slicing we can prescribe this, as through the data centre, or any other point, $\mathbf{c}$.}
 \label{fig:diagrams}
 \end{figure*}
 
 # Implementation {#sec:implementation}
 
-The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the centre point $\mathbf{c}$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the mean In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3D sphere.
+The slice tour has been implemented in R [@rref] as a new display method `display_slice` in the `tourr` package [@tourr]. In addition to usual parameters the user can choose the volume parameter $\epsilon$ by setting `eps` and, if required, the centre point $\mathbf{c}$ is set by the `anchor` argument. By default `eps=0.001` and `anchor=NULL`, resulting in slicing through the mean. In addition the user can select the marker symbols for point inside and outside the slice. By default points in the slice are highlighted as `pch_slice = 20` and `pch_other = 46`, i.e. plotting a bullet for points inside the slice, and a dot for points outside. Below we show example code for displaying slices through a hollow 3D sphere.
 
 ```{r codeExampel, echo=TRUE, eval=FALSE}
 library(tourr)
@@ -182,9 +182,9 @@ animate_slice(sphere3, anchor = anchor3, eps = 0.2, pch_other=26)
 Using the `geozoo` package [@geozoo] a number of ideal shapes are generated. 
 
 ### Hollow sphere
-We sample points on the surface of a sphere with radius $R=1$ in $p=3$ and $p=5$ dimensions. Using the `sphere.hollow()` function, we generate two sample data sets by generating 2000 and 5000 points from a uniform distribution on the surface of a 3D and 5D spheres. For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.1$, i.e. $h = 0.1$ in 3D and $h = 0.46$ in 5D. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure \ref{fig:renderFunction}. Animated gifs of these examples are available at XXX.
+We sample points on the surface of a sphere with radius $R=1$ in $p=3$ and $p=5$ dimensions. Using the `sphere.hollow()` function, we generate two sample data sets by generating 2000 and 5000 points from a uniform distribution on the surface of a 3D and 5D spheres. For both examples we start by slicing through the origin with the default parameters, in particular $\epsilon = 0.1$, i.e. $h = 0.1$ in 3D and $h = 0.46$ in 5D. Slicing through the origin results in sections where the points inside the slice are approximately on a circle with the full radius, and each view is similar to that shown in Figure \ref{fig:renderFunction}.
 
-It is especially instructive to look at the sliced spheres with an off-centre anchor point. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. The first row of Figure \ref{fig:3anchored} shows example views from a slice tour on a 3D sphere with $R=1$ and anchor point $(0.7, 0.7, 0.7)$. Notice that the anchor point was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $R$ (when the anchor point has a negligible orthogonal component to the viewing plane); a circle with radius $<R$ as the viewing angle is tilted away from the axis connecting the anchor point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the anchor point axis. A similar picture is found for the 5D sphere, see second row of Figure \ref{fig:3anchored}. For this example we generate 20k points on a hollow 5D sphere to resolve the features. Since $h$ increases with $p$ the resolution is reduced compared to the 3D example. Note also that as dimensionality increases, the larger orthogonal space means that the centre point will have a large orthogonal component in most views.
+It is especially instructive to look at spheres that are sliced off-centre. In this case the different views obtained in the slice tour reveal more of the concave structure of the distribution. The first row of Figure \ref{fig:3anchored} shows example views from a slice tour on a 3D sphere with $R=1$ and centre point $(0.7, 0.7, 0.7)$. Notice that this was chosen to fall outside the sphere. Depending on the viewing angle selected by the tour the slice contains points on the circle with radius $R$ (when the centre point has a negligible orthogonal component to the viewing plane); a circle with radius $<R$ as the viewing angle is tilted away from the axis connecting the centre point to the origin; a full circle with small radius as the angle increases; and finally we see an empty slice when the projection plane is orthogonal to the centre point axis. A similar picture is found for the 5D sphere, see second row of Figure \ref{fig:3anchored}. For this example we generate 20k points on a hollow 5D sphere to resolve the features. Since $h$ increases with $p$ the resolution is reduced compared to the 3D example. Note also that as dimensionality increases, the larger orthogonal space means that the centre point will have a large orthogonal component in most views.
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/sphere-3-anchored/sphere-3-anchored-033.png}
@@ -226,7 +226,7 @@ To better understand the slice tour we look at different examples of geometric s
 ## Other examples
 
 ### Needle in a haystack
-We use the pollen data as an example for a hidden feature generally occluded in projections. This is a classic 5D data set, originally simulated by by David Coleman of RCA Labs, for the Joint Statistics Meetings 1986 Data Expo [@pollen].  The standardised data is observed in a slice tour with a thin slice ($\epsilon = 0.0005$). Selected views are shown in the first two plots in Figure \ref{fig:pollen}. They indicate the presence of an interesting feature hidden in the centre, which can be identified as the word "EUREKA" by zooming. 
+We use the pollen data as an example for a hidden feature generally occluded in projections. This is a classic 5D data set, originally simulated by David Coleman of RCA Labs, for the Joint Statistics Meetings 1986 Data Expo [@pollen].  The standardised data is observed in a slice tour with a thin slice ($\epsilon = 0.0005$). Selected views are shown in the first two plots in Figure \ref{fig:pollen}. They indicate the presence of an interesting feature hidden in the centre, which can be identified as the word "EUREKA" by zooming. 
 
 \begin{figure*}[ht]
 \centerline{\includegraphics[width=0.2\textwidth]{gifs/png/pollen/pollen-007.png}
@@ -242,9 +242,9 @@ We use the pollen data as an example for a hidden feature generally occluded in 
 \end{figure*}
 
 ### Non-linear boundaries
-@sam.11271 described some principles and approaches for visualising models in the data space. Much of this is based on examining projections provided by a tour of the model in the high-dimensional space. Classification boundaries are explored for the wine data set [@asuncion:2007]. It is difficult to digest the boundaries fully -- for example, where one group's boundary wraps another for example, if they are linear or nonlinear, or whether the boundary goes through the space or is only carving out a corner of it. The sliced projections makes this easier. 
+@sam.11271 described some principles and approaches for visualising models in the data space. Much of this is based on examining projections provided by a tour of the model in the high-dimensional space. Classification boundaries are explored for the wine data set [@asuncion:2007]. It is difficult to digest the boundaries fully -- for example, where one group's boundary wraps another, if they are linear or nonlinear, or whether the boundary goes through the space or is only carving out a corner of it. The sliced projections makes this easier. 
 
-Selected views of projections and sliced projections from a radial basis SVM on 3 variables, and a polynomial basis SVM on 5 variables are shown in Figure \ref{fig:wine}. A large slice volume $\epsilon = 0.15$ is used. The slicing allows exploring the centre of the space. With 3D it reveals the spherical boundary of the group (green) hidden by the projection. In 5D with the polynomial basis, projection might suggest that the boundary between classes is almost linear, but the slicing shows that it to be nonlinear near the centre. 
+Selected views of projections and sliced projections from a radial basis SVM on 3 variables, and a polynomial basis SVM on 5 variables are shown in Figure \ref{fig:wine}. The slicing allows exploring the centre of the space. With 3D it reveals the spherical boundary of the group (green) hidden by the projection. In 5D with the polynomial basis, projection might suggest that the boundary between classes is almost linear, but the slicing shows that it to be nonlinear near the centre. 
 
 \begin{figure*}[ht]
 \centerline{
@@ -258,7 +258,7 @@ Selected views of projections and sliced projections from a radial basis SVM on 
 \includegraphics[width=0.3\textwidth]{gifs/png/wine-poly/wine-poly-096.png}
 \includegraphics[width=0.3\textwidth]{gifs/png/wine-poly/wine-poly-042.png}
 }
-\caption{Exploring classification boundaries of the wine dataset using projection (top row) and sliced projection (bottom row). Radial basis SVM (First column) of 3 variables shows how the slicing reveals the spherical shape of the boundary of one group (green) that was hidden in the projection. Polynomial basis SVM (second and third columns) of 5 variables. The orange group does tend to be wrapped by the green group, and the blue group disappears with slicing, showing that it is on the outer edge of the space.}
+\caption{Exploring classification boundaries of the wine dataset using projection (top row) and sliced projection (bottom row). Radial basis SVM (first column) of 3 variables shows how the slicing reveals the spherical shape of the boundary of one group (green) that was hidden in the projection. Polynomial basis SVM (second and third columns) of 5 variables. The orange group does tend to be wrapped by the green group, and the blue group disappears with slicing, showing that it is on the outer edge of the space.}
 \label{fig:wine}
 \end{figure*}
 
@@ -269,7 +269,7 @@ This paper has introduced a new visualization method for dynamic slicing of high
 
 A default slice thickness is provided with the algorithm, that takes dimensionality into account. As the data dimension increases, more points in the sample are needed, and a thicker slice may be needed. Generally, the tour can be slow to view when there are a large number of samples, and the slicing, where only points inside the slice are drawn, might also be a way to improve the display drawing, with a focus on the important features.
 
-Sliced 2D tours was available in XGobi [@SCB98] but was not documented. This work makes them available in the `tourr` package. It is a simple, but effective, approach to taking slices. 
+Sliced 2D tours were available in XGobi [@SCB98] but were not documented. This work makes them available in the `tourr` package. It is a simple, but effective, approach to taking slices. 
 
 The approach by @prosection is more complex, and slices a subspace  of the $p-d=p-2$ dimensional space orthogonal to the projection. This generates a more parameters, making it more difficult to navigate. More parameters mean more decisions on what to show. However, it is one of the next steps to explore different definitions of a slice tour, and the types of structure that might be captured by variations in slicing algorithms.
 
@@ -277,5 +277,4 @@ Lastly, there is a large literature on projection pursuit, and some of this work
 
 # Acknowledgements
 
-The paper was written in `rmarkdown` [@rmarkdown] using `knitr` [@knitr]. The source material and animated gifs for this paper are available at
-\url{https://github.com/uschiLaa/paper-slice-tour}.
+The paper was written in `rmarkdown` [@rmarkdown] using `knitr` [@knitr]. The source material for this paper are available at \url{https://github.com/uschiLaa/paper-slice-tour} and animated gifs can be found at \url{https://uschilaa.github.io/paper-slice-tour/}.
