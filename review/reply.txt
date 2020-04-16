@@ -1,0 +1,85 @@
+We thank the associate editor and the reviewer for their comments. We have addressed them as follows.
+
+**Comments from the AE**
+
+Page 4, line 26: refers I think to non-central slices, though not introduced yet. Maybe refer to figure 2 here?
+-- We have added a reference to Figure 2 for clarity. --
+
+Page 5, Equation 3: needs bigger brackets around \frac{h}{R}
+-- We fixed the bracket size. --
+
+Page 6, figure 2. Suggest putting this before figure 1.
+-- We have exchanged the order. --
+
+Page 7, example code. Refer to figure 1.
+-- We added the reference. --
+
+Page 8, first paragraph. The Figure 3 plots are described in a different order to which they appear, which is slightly confusing. Refer to particular parts of Figure 3 in the text.
+-- We have added explicit references to the position of the corresponding plots in the text. --
+
+Page 8, figure 3. Needs some explanation of the axes. The axes are not visible on my screen without a big zoom. Especially in the second row, they are not visible in the printed copy either. Overall the figure and caption could be improved.
+-- We agree that the axes are confusing here. Since they do not add relevant information, we have removed them from the figure. --
+
+Page 9, figure 4. Same comments about the axes here. Maybe having the axes separately as in Figure 5 is better?
+-- As for figure 3, the axes are not important for the interpretation of figure 4 and we have removed them here. --
+
+Page 10, figure 6. Suggest putting labels on the individual graphs:  eg “Projection, radial basis”
+In the text, “With 3d”  direct the user to the relevant part of Figure 6, and similarly in the text that follows.
+-- We have added titles to make the figure easier to understand, and added the additional references in the corresponding text. --
+
+The animated gifs referred to in the acknowledgements are not discussed in the paper, and perhaps should be.
+-- XXX I added a sentence to the discussion, but maybe theres a better place for this? --
+
+**Comments from the Reviewer**
+
+(1) Page 2, Line 2: “It is mitgated somewhat when...”
+-- Fixed. --
+
+(2) Page 2, Line 7: “Hypersphere” is misspelled. Also, this sentence is rather long and
+clunky. I suggest: “Consider the example... ...hypersphere. It is difficult...”
+-- We have fixed the typo and split the sentence as suggested. --
+
+(3) Note: The term full/hollow sphere is not standard in geometry (although perhaps that does not matter here). Typically, Dp := {x ∈ Rp : |x| ≤ 1}, denotes the standard p-dimensional disk (or ball), while Sp−1 := {x ∈ Rp : |x| = 1} is the standard sphere. Thus, Sp−1 is a “hypersphere” in Rp and also the boundary of the disk Dp. The
+interior of the disk is usually denoted D◦ p := {x ∈ Rp : |x| < 1}.
+-- We have clarified the relation to the standard terminology in geometry in a footnote. --
+
+(4) Page 2, Line 14: Although the terms do not originate with this paper (and the authors do provide references) it would be helpful to the reader to provide careful defintions of the terms “slice” and “section”. Also, it is unclear (to me at least) what is meant
+by the term “internal distribution”.
+-- XXX check this! I added a few sentences of explanation, but may not be very clear (or considered careful definitions). I don't know what to change about "internal distribution", since to me it is just a way of referring at the types of hidden features discussed in the previous paragraph. --
+
+
+(5) Page 3, Third sentence: Comma after “random” should be a semi-colon.
+-- Fixed. --
+
+(6) Page 3, Second paragraph, Second sentence: “The notation used for explanations...” sounds strange. Also this sentence is clunky. Why not try: “The data consists of n observations in p-dimensions (n points in Rp) and is thus represented as an n × p- dimensional data matrix X. We denote by A, a p×d-dimensional (projection) matrix, the columns of which span a d-dimensional subspace of Rp.” Then carry on as before with “The d-dimensional projection...”
+-- We updated the description as suggested. --
+
+(7) Page 4: Second line after equation (2): “A is assumed be through 0... ” A is a matrix and the columns of A are vectors in Rp spanning a subspace which has no choice but to contain 0. Of course this plane can be rigidly translated to a parallel affine plane which does not contain 0 and, as I understand it, this will happen in the slice tour. It think it might be worth differentiating between the matrix A and the projection subspace more carefully.
+-- We have specified the difference between the matrix A and the plane it defines, which can be translated in space. XXX check! --
+
+(8) Page 4, Second paragraph, First line: “highlighting points” presumably means “pro- jecting points”?
+-- All points are being projected for the display, and in addition we use highlighting to show which point fall inside the slice. As in the examples below, this can be done by using a larger symbol for points inside the slice. We have adapted the sentence to clarify this. --
+
+(9) Page 4, Second paragraph, Fifth line: Comma after “front and back” should be a semi-colon.
+-- Fixed. --
+
+(10) Page 4, Second paragraph, Seventh line: “all sense of direction is lost”. I think there are better ways of expressing this. Why not: “When the orthogonal dimension p − d ≥ 2, there is no longer a unique orthogonal direction in which to translate the projection plane.”
+-- We updated the statement as suggested. --
+
+(11) Page 5, First line of section 2.2.3: “... thus the the slice...”
+-- Fixed. --
+
+(12) Figure 2: Make labels for c, c′ and A larger.
+-- Fixed. --
+
+(13) Page 9: First line: 6d should be 6D for notation to be consistent.
+-- Fixed. --
+
+(14) Page 10, Last line before Fig. 6: Drop the word “that”.
+-- Fixed. --
+
+(15) Page 11, Fourth paragraph, Second line: Drop the word “a” after “generates”.
+-- Fixed. --
+
+(16) Page 12, References: Third reference seems to be missing a journal name.
+-- Fixed. --

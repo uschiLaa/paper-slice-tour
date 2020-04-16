@@ -12,17 +12,17 @@ colnames(sphere5) <- c("x1", "x2", "x3", "x4", "x5")
 # Animate with the slice display using the default parameters
 max_f <- 100 # max frames for rendering the animation
 set.seed(2019)
-render(sphere3, grand_tour(), display_slice(), 'png', "gifs/png/sphere-3-centered-%03d.png", frames = max_f, rescale = FALSE)
+render(sphere3, grand_tour(), display_slice(axes="off"), 'png', "gifs/png/sphere-3-centered-%03d.png", frames = max_f, rescale = FALSE)
 
 set.seed(2019)
-render(sphere5, grand_tour(), display_slice(), 'png', "gifs/png/sphere-5-centered-%03d.png", frames = max_f, rescale = FALSE)
+render(sphere5, grand_tour(), display_slice(axes="off"), 'png', "gifs/png/sphere-5-centered-%03d.png", frames = max_f, rescale = FALSE)
 
 
 # Animate with off-center anchoring
 anchor3 <- rep(0.7, 3)
 
 set.seed(2019)
-render(sphere3, grand_tour(), display_slice(anchor = anchor3), 'png', "gifs/png/sphere-3-anchored-%03d.png", frames = max_f, rescale = FALSE)
+render(sphere3, grand_tour(), display_slice(anchor = anchor3, axes="off"), 'png', "gifs/png/sphere-3-anchored-%03d.png", frames = max_f, rescale = FALSE)
 
 # render 5d sphere with large number of points and off-center anchor
 sphere5 <- geozoo::sphere.hollow(5, 20000)$points
@@ -30,30 +30,30 @@ colnames(sphere5) <- c("x1", "x2", "x3", "x4", "x5")
 anchor5 <- c(1.2, rep(0, 4))
 max_f <- 100 # max frames for rendering the animation
 set.seed(2019)
-render(sphere5, grand_tour(), display_slice(anchor = anchor5), 'png', "gifs/png/sphere-5-anchored-%03d.png", frames = max_f, rescale = FALSE)
+render(sphere5, grand_tour(), display_slice(anchor = anchor5, axes="off", eps=0.01), 'png', "gifs/png/sphere-5-anchored-%03d.png", frames = max_f, rescale = FALSE)
 
 
 torus4 <- geozoo::torus(p=4)$points %>%
   scale()
 colnames(torus4) <- c("x1", "x2", "x3", "x4")
 set.seed(2019)
-render(torus4, grand_tour(), display_slice(eps=0.2), 'png', "gifs/png/torus-4-centered-%03d.png", frames = max_f, rescale = FALSE)
+render(torus4, grand_tour(), display_slice(eps=0.2, axes="off"), 'png', "gifs/png/torus-4-centered-%03d.png", frames = max_f, rescale = FALSE)
 
 cube6 <- geozoo::cube.face(6)$points %>%
   center()
 colnames(cube6) <- c("x1", "x2", "x3", "x4", "x5", "x6")
 set.seed(2019)
-render(cube6, grand_tour(), display_slice(), 'png', "gifs/png/cube-6-centered-%03d.png", frames = max_f, rescale = FALSE)
+render(cube6, grand_tour(), display_slice(eps=0.01, axes="off"), 'png', "gifs/png/cube-6-centered-%03d.png", frames = max_f, rescale = FALSE)
 
 cubeAnchor <- c(1, 0, 0, 0, 0, 0)
 set.seed(2019)
-render(cube6, grand_tour(), display_slice(anchor = cubeAnchor), 'png', "gifs/png/cube-6-anchored-%03d.png", frames = max_f, rescale = FALSE)
+render(cube6, grand_tour(), display_slice(anchor = cubeAnchor, axes="off"), 'png', "gifs/png/cube-6-anchored-%03d.png", frames = max_f, rescale = FALSE)
 
 rmS <- geozoo::roman.surface()$points %>%
   scale()
 colnames(rmS) <- c("x1", "x2", "x3")
 set.seed(2019)
-render(rmS, grand_tour(), display_slice(), 'png', "gifs/png/roman-surface-centered-%03d.png", frames = max_f, rescale = FALSE)
+render(rmS, grand_tour(), display_slice(axes="off"), 'png', "gifs/png/roman-surface-centered-%03d.png", frames = max_f, rescale = FALSE)
 
 
 library(animation)
