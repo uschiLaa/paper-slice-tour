@@ -1,4 +1,4 @@
-We thank the associate editor and the reviewer for their comments. We have addressed them as follows.
+We thank the associate editor and the reviewer for their comments. We have addressed them as follows. Changes have been highlighted in red in the pdf.
 
 **Comments from the AE**
 
@@ -28,7 +28,7 @@ In the text, “With 3d”  direct the user to the relevant part of Figure 6, an
 -- We have added titles to make the figure easier to understand, and added the additional references in the corresponding text. --
 
 The animated gifs referred to in the acknowledgements are not discussed in the paper, and perhaps should be.
--- XXX Added when we first talk about examples and in the discussion. --
+-- Added when we first talk about examples. --
 
 **Comments from the Reviewer**
 
@@ -45,7 +45,7 @@ interior of the disk is usually denoted D◦ p := {x ∈ Rp : |x| < 1}.
 
 (4) Page 2, Line 14: Although the terms do not originate with this paper (and the authors do provide references) it would be helpful to the reader to provide careful defintions of the terms “slice” and “section”. Also, it is unclear (to me at least) what is meant
 by the term “internal distribution”.
--- XXX check this! I added a few sentences of explanation, but may not be very clear (or considered careful definitions). I don't know what to change about "internal distribution", since to me it is just a way of referring at the types of hidden features discussed in the previous paragraph. --
+-- Removed "internal distribution", since it was just a way of referring to the types of hidden features discussed in the previous paragraph. Clearer definitions of slice and section have been added. --
 
 
 (5) Page 3, Third sentence: Comma after “random” should be a semi-colon.
@@ -55,7 +55,7 @@ by the term “internal distribution”.
 -- We updated the description as suggested. --
 
 (7) Page 4: Second line after equation (2): “A is assumed be through 0... ” A is a matrix and the columns of A are vectors in Rp spanning a subspace which has no choice but to contain 0. Of course this plane can be rigidly translated to a parallel affine plane which does not contain 0 and, as I understand it, this will happen in the slice tour. It think it might be worth differentiating between the matrix A and the projection subspace more carefully.
--- We have specified the difference between the matrix A and the plane it defines, which can be translated in space. XXX check! --
+-- We have specified the difference between the matrix A and the plane it defines, which can be translated in space. --
 
 (8) Page 4, Second paragraph, First line: “highlighting points” presumably means “pro- jecting points”?
 -- All points are being projected for the display, and in addition we use highlighting to show which point fall inside the slice. To avoid confusion, we have added an explanation of the highlighting and a reference to Figure 2 for illustration. --
