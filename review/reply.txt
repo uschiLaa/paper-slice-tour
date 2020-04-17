@@ -28,7 +28,7 @@ In the text, “With 3d”  direct the user to the relevant part of Figure 6, an
 -- We have added titles to make the figure easier to understand, and added the additional references in the corresponding text. --
 
 The animated gifs referred to in the acknowledgements are not discussed in the paper, and perhaps should be.
--- XXX I added a sentence to the discussion, but maybe theres a better place for this? --
+-- XXX Added when we first talk about examples and in the discussion. --
 
 **Comments from the Reviewer**
 
@@ -41,7 +41,7 @@ clunky. I suggest: “Consider the example... ...hypersphere. It is difficult...
 
 (3) Note: The term full/hollow sphere is not standard in geometry (although perhaps that does not matter here). Typically, Dp := {x ∈ Rp : |x| ≤ 1}, denotes the standard p-dimensional disk (or ball), while Sp−1 := {x ∈ Rp : |x| = 1} is the standard sphere. Thus, Sp−1 is a “hypersphere” in Rp and also the boundary of the disk Dp. The
 interior of the disk is usually denoted D◦ p := {x ∈ Rp : |x| < 1}.
--- We have clarified the relation to the standard terminology in geometry in a footnote. --
+-- We have added a sentence to clarify the relation to the standard terminology in geometry. --
 
 (4) Page 2, Line 14: Although the terms do not originate with this paper (and the authors do provide references) it would be helpful to the reader to provide careful defintions of the terms “slice” and “section”. Also, it is unclear (to me at least) what is meant
 by the term “internal distribution”.
@@ -58,13 +58,13 @@ by the term “internal distribution”.
 -- We have specified the difference between the matrix A and the plane it defines, which can be translated in space. XXX check! --
 
 (8) Page 4, Second paragraph, First line: “highlighting points” presumably means “pro- jecting points”?
--- All points are being projected for the display, and in addition we use highlighting to show which point fall inside the slice. As in the examples below, this can be done by using a larger symbol for points inside the slice. We have adapted the sentence to clarify this. --
+-- All points are being projected for the display, and in addition we use highlighting to show which point fall inside the slice. To avoid confusion, we have added an explanation of the highlighting and a reference to Figure 2 for illustration. --
 
 (9) Page 4, Second paragraph, Fifth line: Comma after “front and back” should be a semi-colon.
 -- Fixed. --
 
 (10) Page 4, Second paragraph, Seventh line: “all sense of direction is lost”. I think there are better ways of expressing this. Why not: “When the orthogonal dimension p − d ≥ 2, there is no longer a unique orthogonal direction in which to translate the projection plane.”
--- We updated the statement as suggested. --
+-- We updated the statement along those lines. --
 
 (11) Page 5, First line of section 2.2.3: “... thus the the slice...”
 -- Fixed. --
