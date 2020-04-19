@@ -1,6 +1,6 @@
-We thank the associate editor and the reviewer for their comments. We have addressed them as follows. Changes have been highlighted in red in the pdf.
+We thank the associate editor and the reviewer for their comments. We have addressed them as follows. Major changes in the text have been highlighted in red in the pdf.
 
-**Comments from the AE**
+** Comments from the AE **
 
 Page 4, line 26: refers I think to non-central slices, though not introduced yet. Maybe refer to figure 2 here?
 -- We have added a reference to Figure 2 for clarity. --
@@ -30,23 +30,20 @@ In the text, “With 3d”  direct the user to the relevant part of Figure 6, an
 The animated gifs referred to in the acknowledgements are not discussed in the paper, and perhaps should be.
 -- Added when we first talk about examples. --
 
+-------------------------------------------------------------------------------
 **Comments from the Reviewer**
 
 (1) Page 2, Line 2: “It is mitgated somewhat when...”
 -- Fixed. --
 
-(2) Page 2, Line 7: “Hypersphere” is misspelled. Also, this sentence is rather long and
-clunky. I suggest: “Consider the example... ...hypersphere. It is difficult...”
+(2) Page 2, Line 7: “Hypersphere” is misspelled. Also, this sentence is rather long and clunky. I suggest: “Consider the example... ...hypersphere. It is difficult...”
 -- We have fixed the typo and split the sentence as suggested. --
 
-(3) Note: The term full/hollow sphere is not standard in geometry (although perhaps that does not matter here). Typically, Dp := {x ∈ Rp : |x| ≤ 1}, denotes the standard p-dimensional disk (or ball), while Sp−1 := {x ∈ Rp : |x| = 1} is the standard sphere. Thus, Sp−1 is a “hypersphere” in Rp and also the boundary of the disk Dp. The
-interior of the disk is usually denoted D◦ p := {x ∈ Rp : |x| < 1}.
+(3) Note: The term full/hollow sphere is not standard in geometry (although perhaps that does not matter here). Typically, Dp := {x ∈ Rp : |x| ≤ 1}, denotes the standard p-dimensional disk (or ball), while Sp−1 := {x ∈ Rp : |x| = 1} is the standard sphere. Thus, Sp−1 is a “hypersphere” in Rp and also the boundary of the disk Dp. The interior of the disk is usually denoted D◦ p := {x ∈ Rp : |x| < 1}.
 -- We have added a sentence to clarify the relation to the standard terminology in geometry. --
 
-(4) Page 2, Line 14: Although the terms do not originate with this paper (and the authors do provide references) it would be helpful to the reader to provide careful defintions of the terms “slice” and “section”. Also, it is unclear (to me at least) what is meant
-by the term “internal distribution”.
+(4) Page 2, Line 14: Although the terms do not originate with this paper (and the authors do provide references) it would be helpful to the reader to provide careful defintions of the terms “slice” and “section”. Also, it is unclear (to me at least) what is meant by the term “internal distribution”.
 -- Removed "internal distribution", since it was just a way of referring to the types of hidden features discussed in the previous paragraph. Clearer definitions of slice and section have been added. --
-
 
 (5) Page 3, Third sentence: Comma after “random” should be a semi-colon.
 -- Fixed. --
@@ -57,7 +54,7 @@ by the term “internal distribution”.
 (7) Page 4: Second line after equation (2): “A is assumed be through 0... ” A is a matrix and the columns of A are vectors in Rp spanning a subspace which has no choice but to contain 0. Of course this plane can be rigidly translated to a parallel affine plane which does not contain 0 and, as I understand it, this will happen in the slice tour. It think it might be worth differentiating between the matrix A and the projection subspace more carefully.
 -- We have specified the difference between the matrix A and the plane it defines, which can be translated in space. --
 
-(8) Page 4, Second paragraph, First line: “highlighting points” presumably means “pro- jecting points”?
+(8) Page 4, Second paragraph, First line: “highlighting points” presumably means “projecting points”?
 -- All points are being projected for the display, and in addition we use highlighting to show which point fall inside the slice. To avoid confusion, we have added an explanation of the highlighting and a reference to Figure 2 for illustration. --
 
 (9) Page 4, Second paragraph, Fifth line: Comma after “front and back” should be a semi-colon.
